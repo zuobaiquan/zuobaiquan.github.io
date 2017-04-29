@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zuobaiquan.github.io/about/index.html</loc>
+    
+    <lastmod>2017-04-29T08:01:57.073Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://zuobaiquan.github.io/tags/index.html</loc>
     
     <lastmod>2017-04-29T04:57:30.539Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://zuobaiquan.github.io/categories/index.html</loc>
     
     <lastmod>2017-04-29T04:57:20.086Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zuobaiquan.github.io/about/index.html</loc>
-    
-    <lastmod>2017-04-09T09:22:56.074Z</lastmod>
     
   </url>
   
