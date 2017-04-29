@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  
+  <title>如何在代码中减少if else语句的使用 | zuobaiquan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言代码中嵌套的if/else结构往往导致代码不美观，也不易于理解。面向过程的开发中代码有大量的if else，在java中可以用一些设计模式替换掉这些逻辑，那么在js中是否也有类似的方法用来尽可能减少代码中的if/else嵌套呢？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在代码中减少if else语句的使用">
+<meta property="og:url" content="https://zuobaiquan.github.io/2016/09/21/reduce-if-else/index.html">
+<meta property="og:site_name" content="zuobaiquan">
+<meta property="og:description" content="前言代码中嵌套的if/else结构往往导致代码不美观，也不易于理解。面向过程的开发中代码有大量的if else，在java中可以用一些设计模式替换掉这些逻辑，那么在js中是否也有类似的方法用来尽可能减少代码中的if/else嵌套呢？">
+<meta property="og:updated_time" content="2017-04-09T07:46:42.960Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何在代码中减少if else语句的使用">
+<meta name="twitter:description" content="前言代码中嵌套的if/else结构往往导致代码不美观，也不易于理解。面向过程的开发中代码有大量的if else，在java中可以用一些设计模式替换掉这些逻辑，那么在js中是否也有类似的方法用来尽可能减少代码中的if/else嵌套呢？">
+  
+    <link rel="alternative" href="/atom.xml" title="zuobaiquan" type="application/atom+xml">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  
+
+</head>
+
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <nav id="upper-nav" class="inner">
+      <a id="main-nav-toggle" class="nav-icon"></a>
+      <div class="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        
+          <a id="nav-github" class="nav-icon" href="https://github.com/zuobaiquan"></a>
+        
+      </div>
+    </nav>
+    <div id="header-title">
+      
+        <h1 id="blog-title-wrap">
+          <a href="/" id="blog-title">My Blog</a>
+        </h1>
+      
+    </div>
+    <div id="contenedor">
+      <ul class="cube">
+        <li class="cara">前端</li>
+        <li class="cara">JS</li>
+        <li class="cara">Html5</li>
+        <li class="cara">CSS3</li>
+        <li class="cara">框架</li>
+      </ul>
+    </div>
+    <nav id="main-nav">
+      
+        <a class="main-nav-link" href="/">home</a>
+      
+        <a class="main-nav-link" href="/archives">archives</a>
+      
+        <a class="main-nav-link" href="/categories">categories</a>
+      
+        <a class="main-nav-link" href="/tags">tags</a>
+      
+        <a class="main-nav-link" href="/about">about</a>
+      
+        <a class="main-nav-link" href="/resume">resume</a>
+      
+      <a class="main-nav-link st-search-show-outputs">Search</a>
+    </nav>
+  </div>
+</header>
+
+    <div class="outer">
+      <section id="main"><article id="post-reduce-if-else" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <h3 href="/2016/09/21/reduce-if-else/" class="article-date">
+  <time datetime="2016-09-21T08:01:49.000Z" itemprop="datePublished">2016-09-21</time>
+</h3>
+    
+  </div>
+  <div class="article-inner">
+  <div class="curve-down">
+  <div class="fill-content">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      如何在代码中减少if else语句的使用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        <p>前言<br>代码中嵌套的if/else结构往往导致代码不美观，也不易于理解。面向过程的开发中代码有大量的if else，在java中可以用一些设计模式替换掉这些逻辑，那么在js中是否也有类似的方法用来尽可能减少代码中的if/else嵌套呢？<br><a id="more"></a><br>有人认为：if else多就多呗，只要可读性强，维护起来方便。jQuery.fn.init里就是一堆if else判断，难道要质疑jQuery作者的水平了？</p>
+<p>并不是说if else多就不好，关键是看用的地方，jQuery.fn.init里除了if else判断简洁点，难道要改成switch？就算用工厂模式，还不是得做大量的if判断。</p>
+<p>常用方法<br>代码整洁强迫症患者必须要来个抛砖引玉：</p>
+<h2 id="1-使用-或"><a href="#1-使用-或" class="headerlink" title="1. 使用||或"></a>1. 使用||或</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if(a为真)&#123;</div><div class="line">    a=a</div><div class="line">&#125;else&#123;</div><div class="line">    a=b</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可写成：a = a || b</p>
+<h2 id="2-使用三元表达式"><a href="#2-使用三元表达式" class="headerlink" title="2. 使用三元表达式"></a>2. 使用三元表达式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if(a==b)&#123;</div><div class="line">    a=c</div><div class="line">&#125;else&#123;</div><div class="line">    a=d</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可写成：a = (a==b) ? c : d</p>
+<h2 id="3-结合数组"><a href="#3-结合数组" class="headerlink" title="3. 结合数组"></a>3. 结合数组</h2><p>后台接口通常会返回这种数据：<br>fruit: 0 // 0=苹果，1=梨子，2=桔子，3=柠檬，4=芒果…<br>这时写if…else是最痛苦的。从冲哥那偷来个方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var _f = [&apos;苹果&apos;,&apos;梨子&apos;,&apos;桔子&apos;,&apos;柠檬&apos;,&apos;芒果&apos;];</div><div class="line">shuiguo = _f[fruit];</div></pre></td></tr></table></figure></p>
+<p>建议</p>
+<h2 id="第一步：优化if逻辑"><a href="#第一步：优化if逻辑" class="headerlink" title="第一步：优化if逻辑"></a>第一步：优化if逻辑</h2><p>人们考虑的东西到时候，都会把最可能发生的情况先做好准备。优化if逻辑的时候也可以这样想：把最可能出现的条件放在前面，把最不可能出现的条件放在后面，这样程序执行时总会按照带啊名的先后顺序逐一检测所有的条件，知道发现匹配的条件才会停止继续检测。</p>
+<p>if的优化目标：最小化找到分支之前所判断条件体的数量。if优化的方法：将最常见的条件放在首位。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">if(i &lt; 5) &#123;</div><div class="line">   // 执行一些代码</div><div class="line">&#125; else if (i &gt; 5 &amp;&amp; i &lt; 10) &#123;</div><div class="line">   // 执行一些代码</div><div class="line">&#125; else &#123;</div><div class="line">   // 执行一些代码</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>例如上面这个例子，只有在i值经常出现小于5的时候是最优化的。如果i值经常大于或者等于10的话，那么在进入正确的分支之前，就必须两次运算条件体，导致表达式的平均运算时间增加。if中的条件体应该总是按照从最大概率到最小概率排列，以保证理论速度最快。</p>
+<h2 id="第二步：尽量少使用else"><a href="#第二步：尽量少使用else" class="headerlink" title="第二步：尽量少使用else"></a>第二步：尽量少使用else</h2><p>如果在函数中，可以使用 if + return，先判断错误条件，然后立马结束函数，防止进入 else 分支。</p>
+<p>举个简单的例子，后端返回数据，前端根据状态进行不同操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$.ajax().done(function (res) &#123;</div><div class="line">    if (res.state === &apos;SUCCESS&apos;) &#123;</div><div class="line">        //TODO</div><div class="line">    &#125; else if (res.state === &apos;FAIL&apos;) &#123;</div><div class="line">        //TODO</div><div class="line">    &#125; else &#123;</div><div class="line">        //TODO</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>这里用if else不挺好的么，有啥问题么？不过我个人倾向于switch。</p>
+<p>解决方法</p>
+<ol>
+<li>switch/case</li>
+</ol>
+<p>switch和if else在性能上是没有什么区别的，主要还是根据需求进行分析和选择。</p>
+<p>如果条件较小的话选用if else比较合适。<br>相反，条件数量较大的话，就建议选用switch。<br>一般来说，if else适用于两个离散的值或者不同的值域。如果判断多个离散值，使用switch更加合适。</p>
+<blockquote>
+<p>在大多数的情况下switch比if else运行的更加快。</p>
+</blockquote>
+<p>在大多数情况下，switch的性能不会比if else低。switch的确在实质上跟if else if 完全一样的效果，不过在很多情况下，使用switch要比if else方便不少</p>
+<p>比如经典的值等分支，匹配一些状态常量的时候，比if else结构方便许多，不用反复写xx == yy<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">$.ajax().done(function (res) &#123;</div><div class="line">    switch (res.state) &#123;</div><div class="line">        case &apos;SUCCESS&apos;:</div><div class="line">            //TODO</div><div class="line">            break;</div><div class="line">        case &apos;FAIL&apos;:</div><div class="line">            //TODO</div><div class="line">            break;</div><div class="line">        default :</div><div class="line">            //TODO</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>注意：千万不要忘记在每一个case语句后面放一个break语句。也可以放一个return或者throw。case语句匹配expression是用===而不是==。</p>
+<p>2.hash 表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">if (key == &quot;Apple&quot;) &#123;</div><div class="line">    val = &quot;Jobs&quot;;</div><div class="line">&#125; else if (key == &quot;microsoft&quot;)&#123;</div><div class="line">    val = &quot;Gates&quot;;</div><div class="line">&#125; else if (key == &quot;Google&quot;)&#123;</div><div class="line">    val = &quot;Larry&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个也可以用 switch case 解决，不过推荐的方法是 hash 表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var ceos = &#123;&quot;Apple&quot;:&quot;Jobs&quot;, &quot;microsoft&quot;:&quot;Gates&quot;, &quot;Google&quot;:&quot;Larry&quot;&#125;;</div><div class="line">val = ceos[key];</div></pre></td></tr></table></figure></p>
+<p>3.重构，用 OO 里面的继承或者组合</p>
+<blockquote>
+<p>1.如果是狗，则汪汪<br>2.如果是猫，则喵喵<br>3.如果是羊，则咩咩<br>4.如果是鸭，则嘎嘎</p>
+</blockquote>
+<p> 可以重构一下，改成 OO。</p>
+<blockquote>
+<p> <em>定义类： 动物（或者接口）
+</em>定义方法：叫<br><em>定义子类：狗、猫、羊、鸭
+</em>重写方法 —- 叫</p>
+</blockquote>
+<p>也就是说将同的判断按照功能，写成函数，这样也便于阅读<br>比如我有一个方法根据类型获取名称，用if else会这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function getName(type) &#123;</div><div class="line">    if (type === &apos;monkey&apos;) &#123;</div><div class="line">        return &apos;monkey name&apos;;</div><div class="line">    &#125; else if (type === &apos;cat&apos;) &#123;</div><div class="line">        return &apos;cat name&apos;;</div><div class="line">    &#125; else &#123;</div><div class="line">        return &apos;dog name&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果写成函数，改成下面的会更好<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function getName(type) &#123;</div><div class="line">    var data = &#123;</div><div class="line">        monkey: &apos;monkey name&apos;,</div><div class="line">        cat: &apos;cat name&apos;,</div><div class="line">        dog: &apos;dog name&apos;</div><div class="line">    &#125;</div><div class="line">    return data[type] ? data[type] : data[&apos;dog&apos;];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>硬要把设计模式添加到JS里不是不可以，但是要看情况。生搬硬套过来的东西然并卵啊。</p>
+<p>写代码记住三个字即可，短简易。代码短，读起来简单，维护容易，如果在性能和代码长度上二选一，我肯定选代码短，性能不行，加台服务器就是了。而冗长的代码并不是加个程序员就能搞定的。</p>
+<p>保持着这个心态写代码，写出的东西离设计模式也不会差太多了。</p>
+<p>多说一句：存在必有其价值，不能说if else多了就不好，凡事无绝对，适合A的未必就适合B，每个东西都有其实现的场景。同理改写设计模式未必就是最棒的，听起来高大上点而已。</p>
+<p>来源：<a href="http://www.xuanfengge.com/how-to-reduce-the-use-of-if-else-statements.html" target="_blank" rel="external">http://www.xuanfengge.com/how-to-reduce-the-use-of-if-else-statements.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-content">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+
+        <a data-url="https://zuobaiquan.github.io/2016/09/21/reduce-if-else/" data-id="cj22l5bkm000eq8n3ac7hsroq" class="article-share-link">Share</a>
+        
+      </div>
+    </footer>
+  </div>
+  </div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/08/11/css-opacity/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">CSS实现背景透明，文字不透明(兼容所有浏览器)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/09/21/reduce-if-else/">如何在代码中减少if else语句的使用</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/11/css-opacity/">CSS实现背景透明，文字不透明(兼容所有浏览器)</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/22/html-displayhidden/">鼠标显示一个层的同时隐藏其他层</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/12/css-arrow/">利用纯粹的CSS3替代小图标---向右箭头</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/29/css-float/">关于浮动与清除浮动</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 zuobaiquan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/sun11/hexo-theme-paperbox" target="_blank">Paperbox</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">home</a>
+  
+    <a href="/archives" class="mobile-nav-link">archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">tags</a>
+  
+    <a href="/about" class="mobile-nav-link">about</a>
+  
+    <a href="/resume" class="mobile-nav-link">resume</a>
+  
+  <a href="#search" class="mobile-nav-link st-search-show-outputs">Search</a>
+</nav>
+  
+
+<!-- totop start -->
+<div id="totop">
+	<a title="To Top"></a>
+</div>
+<!-- totop end -->
+
+<!-- swiftype search start -->
+
+<!-- swiftype search end -->
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/lrsjng.jquery-qrcode/0.12.0/jquery.qrcode.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
