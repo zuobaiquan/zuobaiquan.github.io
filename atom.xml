@@ -22,26 +22,26 @@
     <published>2016-09-21T08:01:49.000Z</published>
     <updated>2017-04-09T07:46:42.960Z</updated>
     
-    <content type="html"><![CDATA[<p>前言<br>代码中嵌套的if/else结构往往导致代码不美观，也不易于理解。面向过程的开发中代码有大量的if else，在java中可以用一些设计模式替换掉这些逻辑，那么在js中是否也有类似的方法用来尽可能减少代码中的if/else嵌套呢？<br><a id="more"></a><br>有人认为：if else多就多呗，只要可读性强，维护起来方便。jQuery.fn.init里就是一堆if else判断，难道要质疑jQuery作者的水平了？</p><p>并不是说if else多就不好，关键是看用的地方，jQuery.fn.init里除了if else判断简洁点，难道要改成switch？就算用工厂模式，还不是得做大量的if判断。</p><p>常用方法<br>代码整洁强迫症患者必须要来个抛砖引玉：</p><h2 id="1-使用-或"><a href="#1-使用-或" class="headerlink" title="1. 使用||或"></a>1. 使用||或</h2><pre><code class="javascipt">if(a为真){
+    <content type="html"><![CDATA[<p>前言<br>代码中嵌套的if/else结构往往导致代码不美观，也不易于理解。面向过程的开发中代码有大量的if else，在java中可以用一些设计模式替换掉这些逻辑，那么在js中是否也有类似的方法用来尽可能减少代码中的if/else嵌套呢？<br><a id="more"></a><br>有人认为：if else多就多呗，只要可读性强，维护起来方便。jQuery.fn.init里就是一堆if else判断，难道要质疑jQuery作者的水平了？</p><p>并不是说if else多就不好，关键是看用的地方，jQuery.fn.init里除了if else判断简洁点，难道要改成switch？就算用工厂模式，还不是得做大量的if判断。</p><p>常用方法<br>代码整洁强迫症患者必须要来个抛砖引玉：</p><h2 id="1-使用-或"><a href="#1-使用-或" class="headerlink" title="1. 使用||或"></a>1. 使用||或</h2><pre><code class="lang-javascipt">if(a为真){
     a=a
 }else{
     a=b
 }
-</code></pre><p>可写成：a = a || b</p><h2 id="2-使用三元表达式"><a href="#2-使用三元表达式" class="headerlink" title="2. 使用三元表达式"></a>2. 使用三元表达式</h2><pre><code class="javascipt">if(a==b){
+</code></pre><p>可写成：a = a || b</p><h2 id="2-使用三元表达式"><a href="#2-使用三元表达式" class="headerlink" title="2. 使用三元表达式"></a>2. 使用三元表达式</h2><pre><code class="lang-javascipt">if(a==b){
     a=c
 }else{
     a=d
 }
-</code></pre><p>可写成：a = (a==b) ? c : d</p><h2 id="3-结合数组"><a href="#3-结合数组" class="headerlink" title="3. 结合数组"></a>3. 结合数组</h2><p>后台接口通常会返回这种数据：<br>fruit: 0 // 0=苹果，1=梨子，2=桔子，3=柠檬，4=芒果…<br>这时写if…else是最痛苦的。从冲哥那偷来个方法：</p><pre><code class="javascipt">var _f = [&#39;苹果&#39;,&#39;梨子&#39;,&#39;桔子&#39;,&#39;柠檬&#39;,&#39;芒果&#39;];
+</code></pre><p>可写成：a = (a==b) ? c : d</p><h2 id="3-结合数组"><a href="#3-结合数组" class="headerlink" title="3. 结合数组"></a>3. 结合数组</h2><p>后台接口通常会返回这种数据：<br>fruit: 0 // 0=苹果，1=梨子，2=桔子，3=柠檬，4=芒果…<br>这时写if…else是最痛苦的。从冲哥那偷来个方法：</p><pre><code class="lang-javascipt">var _f = [&#39;苹果&#39;,&#39;梨子&#39;,&#39;桔子&#39;,&#39;柠檬&#39;,&#39;芒果&#39;];
 shuiguo = _f[fruit];
-</code></pre><p>建议</p><h2 id="第一步：优化if逻辑"><a href="#第一步：优化if逻辑" class="headerlink" title="第一步：优化if逻辑"></a>第一步：优化if逻辑</h2><p>人们考虑的东西到时候，都会把最可能发生的情况先做好准备。优化if逻辑的时候也可以这样想：把最可能出现的条件放在前面，把最不可能出现的条件放在后面，这样程序执行时总会按照带啊名的先后顺序逐一检测所有的条件，知道发现匹配的条件才会停止继续检测。</p><p>if的优化目标：最小化找到分支之前所判断条件体的数量。if优化的方法：将最常见的条件放在首位。</p><pre><code class="javascipt"> if(i &lt; 5) {
+</code></pre><p>建议</p><h2 id="第一步：优化if逻辑"><a href="#第一步：优化if逻辑" class="headerlink" title="第一步：优化if逻辑"></a>第一步：优化if逻辑</h2><p>人们考虑的东西到时候，都会把最可能发生的情况先做好准备。优化if逻辑的时候也可以这样想：把最可能出现的条件放在前面，把最不可能出现的条件放在后面，这样程序执行时总会按照带啊名的先后顺序逐一检测所有的条件，知道发现匹配的条件才会停止继续检测。</p><p>if的优化目标：最小化找到分支之前所判断条件体的数量。if优化的方法：将最常见的条件放在首位。</p><pre><code class="lang-javascipt"> if(i &lt; 5) {
     // 执行一些代码
  } else if (i &gt; 5 &amp;&amp; i &lt; 10) {
     // 执行一些代码
  } else {
     // 执行一些代码
  }
-</code></pre><p>例如上面这个例子，只有在i值经常出现小于5的时候是最优化的。如果i值经常大于或者等于10的话，那么在进入正确的分支之前，就必须两次运算条件体，导致表达式的平均运算时间增加。if中的条件体应该总是按照从最大概率到最小概率排列，以保证理论速度最快。</p><h2 id="第二步：尽量少使用else"><a href="#第二步：尽量少使用else" class="headerlink" title="第二步：尽量少使用else"></a>第二步：尽量少使用else</h2><p>如果在函数中，可以使用 if + return，先判断错误条件，然后立马结束函数，防止进入 else 分支。</p><p>举个简单的例子，后端返回数据，前端根据状态进行不同操作</p><pre><code class="javascipt">$.ajax().done(function (res) {
+</code></pre><p>例如上面这个例子，只有在i值经常出现小于5的时候是最优化的。如果i值经常大于或者等于10的话，那么在进入正确的分支之前，就必须两次运算条件体，导致表达式的平均运算时间增加。if中的条件体应该总是按照从最大概率到最小概率排列，以保证理论速度最快。</p><h2 id="第二步：尽量少使用else"><a href="#第二步：尽量少使用else" class="headerlink" title="第二步：尽量少使用else"></a>第二步：尽量少使用else</h2><p>如果在函数中，可以使用 if + return，先判断错误条件，然后立马结束函数，防止进入 else 分支。</p><p>举个简单的例子，后端返回数据，前端根据状态进行不同操作</p><pre><code class="lang-javascipt">$.ajax().done(function (res) {
     if (res.state === &#39;SUCCESS&#39;) {
         //TODO
     } else if (res.state === &#39;FAIL&#39;) {
@@ -50,7 +50,7 @@ shuiguo = _f[fruit];
         //TODO
     }
 });
-</code></pre><p>这里用if else不挺好的么，有啥问题么？不过我个人倾向于switch。</p><p>解决方法</p><ol><li>switch/case</li></ol><p>switch和if else在性能上是没有什么区别的，主要还是根据需求进行分析和选择。</p><p>如果条件较小的话选用if else比较合适。<br>相反，条件数量较大的话，就建议选用switch。<br>一般来说，if else适用于两个离散的值或者不同的值域。如果判断多个离散值，使用switch更加合适。</p><blockquote><p>在大多数的情况下switch比if else运行的更加快。</p></blockquote><p>在大多数情况下，switch的性能不会比if else低。switch的确在实质上跟if else if 完全一样的效果，不过在很多情况下，使用switch要比if else方便不少</p><p>比如经典的值等分支，匹配一些状态常量的时候，比if else结构方便许多，不用反复写xx == yy</p><pre><code class="javascipt">$.ajax().done(function (res) {
+</code></pre><p>这里用if else不挺好的么，有啥问题么？不过我个人倾向于switch。</p><p>解决方法</p><ol><li>switch/case</li></ol><p>switch和if else在性能上是没有什么区别的，主要还是根据需求进行分析和选择。</p><p>如果条件较小的话选用if else比较合适。<br>相反，条件数量较大的话，就建议选用switch。<br>一般来说，if else适用于两个离散的值或者不同的值域。如果判断多个离散值，使用switch更加合适。</p><blockquote><p>在大多数的情况下switch比if else运行的更加快。</p></blockquote><p>在大多数情况下，switch的性能不会比if else低。switch的确在实质上跟if else if 完全一样的效果，不过在很多情况下，使用switch要比if else方便不少</p><p>比如经典的值等分支，匹配一些状态常量的时候，比if else结构方便许多，不用反复写xx == yy</p><pre><code class="lang-javascipt">$.ajax().done(function (res) {
     switch (res.state) {
         case &#39;SUCCESS&#39;:
             //TODO
@@ -62,16 +62,16 @@ shuiguo = _f[fruit];
             //TODO
     }
 });
-</code></pre><p>注意：千万不要忘记在每一个case语句后面放一个break语句。也可以放一个return或者throw。case语句匹配expression是用===而不是==。</p><p>2.hash 表</p><pre><code class="javascipt">if (key == &quot;Apple&quot;) {
+</code></pre><p>注意：千万不要忘记在每一个case语句后面放一个break语句。也可以放一个return或者throw。case语句匹配expression是用===而不是==。</p><p>2.hash 表</p><pre><code class="lang-javascipt">if (key == &quot;Apple&quot;) {
     val = &quot;Jobs&quot;;
 } else if (key == &quot;microsoft&quot;){
     val = &quot;Gates&quot;;
 } else if (key == &quot;Google&quot;){
     val = &quot;Larry&quot;;
 }
-</code></pre><p>这个也可以用 switch case 解决，不过推荐的方法是 hash 表：</p><pre><code class="javascipt">var ceos = {&quot;Apple&quot;:&quot;Jobs&quot;, &quot;microsoft&quot;:&quot;Gates&quot;, &quot;Google&quot;:&quot;Larry&quot;};
+</code></pre><p>这个也可以用 switch case 解决，不过推荐的方法是 hash 表：</p><pre><code class="lang-javascipt">var ceos = {&quot;Apple&quot;:&quot;Jobs&quot;, &quot;microsoft&quot;:&quot;Gates&quot;, &quot;Google&quot;:&quot;Larry&quot;};
 val = ceos[key];
-</code></pre><p>3.重构，用 OO 里面的继承或者组合</p><blockquote><p>1.如果是狗，则汪汪<br>2.如果是猫，则喵喵<br>3.如果是羊，则咩咩<br>4.如果是鸭，则嘎嘎</p></blockquote><p>可以重构一下，改成 OO。</p><blockquote><p><em>定义类： 动物（或者接口） </em>定义方法：叫<br><em>定义子类：狗、猫、羊、鸭 </em>重写方法 —- 叫</p></blockquote><p>也就是说将同的判断按照功能，写成函数，这样也便于阅读<br>比如我有一个方法根据类型获取名称，用if else会这样</p><pre><code class="javascipt">function getName(type) {
+</code></pre><p>3.重构，用 OO 里面的继承或者组合</p><blockquote><p>1.如果是狗，则汪汪<br>2.如果是猫，则喵喵<br>3.如果是羊，则咩咩<br>4.如果是鸭，则嘎嘎</p></blockquote><p>可以重构一下，改成 OO。</p><blockquote><p><em>定义类： 动物（或者接口） </em>定义方法：叫<br><em>定义子类：狗、猫、羊、鸭 </em>重写方法 —— 叫</p></blockquote><p>也就是说将同的判断按照功能，写成函数，这样也便于阅读<br>比如我有一个方法根据类型获取名称，用if else会这样</p><pre><code class="lang-javascipt">function getName(type) {
     if (type === &#39;monkey&#39;) {
         return &#39;monkey name&#39;;
     } else if (type === &#39;cat&#39;) {
@@ -80,7 +80,7 @@ val = ceos[key];
         return &#39;dog name&#39;;
     }
 }
-</code></pre><p>如果写成函数，改成下面的会更好</p><pre><code class="javascipt">function getName(type) {
+</code></pre><p>如果写成函数，改成下面的会更好</p><pre><code class="lang-javascipt">function getName(type) {
     var data = {
         monkey: &#39;monkey name&#39;,
         cat: &#39;cat name&#39;,
@@ -108,7 +108,7 @@ val = ceos[key];
     <published>2016-08-11T04:07:49.000Z</published>
     <updated>2017-04-09T07:46:32.648Z</updated>
     
-    <content type="html"><![CDATA[<p>我们平时所说的调整透明度，其实在样式中是调整不透明度，如下图所示例：<br><a id="more"></a><br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714144736561-863618505.png" alt="此处输入图片的描述"><br>打开ps，在图层面板上，可以看到设置图层整理不透明度的菜单，从 0% （完全透明）到 100%（完全不透明）。<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714144830639-716499190.jpg" alt="此处输入图片的描述"><br>实现透明的css方法通常有以下3种方式，以下是不透明度都为80%的写法</p><p>css3的opacity:x，x 的取值从 0 到 1，如opacity: 0.8<br>css3的rgba(red, green, blue, alpha)，alpha的取值从 0 到 1，如rgba(255,255,255,0.8)<br>IE专属滤镜 filter:Alpha(opacity=x)，x 的取值从 0 到 100，如filter:Alpha(opacity=80)<br>css3的opacity</p><p>兼容性：IE6、7、8不支持，IE9及以上版本和标准浏览器都支持<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714145037639-681202916.png" alt="此处输入图片的描述"><br>使用说明：设置opacity元素的所有后代元素会随着一起具有透明性，一般用于调整图片或者模块的整体不透明度</p><pre><code class="html">&lt;!DOCTYPE html&gt;
+    <content type="html"><![CDATA[<p>我们平时所说的调整透明度，其实在样式中是调整不透明度，如下图所示例：<br><a id="more"></a><br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714144736561-863618505.png" alt="此处输入图片的描述"><br>打开ps，在图层面板上，可以看到设置图层整理不透明度的菜单，从 0% （完全透明）到 100%（完全不透明）。<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714144830639-716499190.jpg" alt="此处输入图片的描述"><br>实现透明的css方法通常有以下3种方式，以下是不透明度都为80%的写法</p><p>css3的opacity:x，x 的取值从 0 到 1，如opacity: 0.8<br>css3的rgba(red, green, blue, alpha)，alpha的取值从 0 到 1，如rgba(255,255,255,0.8)<br>IE专属滤镜 filter:Alpha(opacity=x)，x 的取值从 0 到 100，如filter:Alpha(opacity=80)<br>css3的opacity</p><p>兼容性：IE6、7、8不支持，IE9及以上版本和标准浏览器都支持<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714145037639-681202916.png" alt="此处输入图片的描述"><br>使用说明：设置opacity元素的所有后代元素会随着一起具有透明性，一般用于调整图片或者模块的整体不透明度</p><pre><code class="lang-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
@@ -137,7 +137,7 @@ body{
     &lt;p&gt;背景透明，文字也透明&lt;/p&gt;
 &lt;/div&gt;
 &lt;/html&gt;
-</code></pre><p>使用opacity后整个模块都透明了，展现如下：<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714145214889-941141268.png" alt="此处输入图片的描述"><br>那么使用opacity实现《背景透明，文字不透明》是不可取的。<br>css3的rgba<br>兼容性：IE6、7、8不支持，IE9及以上版本和标准浏览器都支持<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714145308061-1256426158.png" alt="此处输入图片的描述"><br>使用说明：设置颜色的不透明度，一般用于调整background-color、color、box-shadow等的不透明度。</p><pre><code class="html">&lt;!DOCTYPE html&gt;
+</code></pre><p>使用opacity后整个模块都透明了，展现如下：<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714145214889-941141268.png" alt="此处输入图片的描述"><br>那么使用opacity实现《背景透明，文字不透明》是不可取的。<br>css3的rgba<br>兼容性：IE6、7、8不支持，IE9及以上版本和标准浏览器都支持<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714145308061-1256426158.png" alt="此处输入图片的描述"><br>使用说明：设置颜色的不透明度，一般用于调整background-color、color、box-shadow等的不透明度。</p><pre><code class="lang-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
@@ -167,7 +167,7 @@ body{
     &lt;p&gt;背景透明，文字也透明&lt;/p&gt;
 &lt;/div&gt;
 &lt;/html&gt;
-</code></pre><p>在background-color中使用rgba，标准浏览器中，背景透明，文字不透明，展现如下：<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714145427311-422392724.png" alt="此处输入图片的描述"><br>很奇葩的是，IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂rgba，解析后颜色为透明，其实应该是null<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714145634561-581154038.png" alt="此处输入图片的描述"><br>那么使用opacity实现背景透明，文字不透明是可取的。</p><p>IE专属滤镜 filter:Alpha(opacity=x)</p><p>使用说明：IE浏览器专属，问题多多，本文以设置背景透明为例子，如下：</p><p>1、仅支持IE6、7、8、9，在IE10版本被废除<br>2、在IE6、7中，需要激活IE的haslayout属性(如：<em>zoom:1或者</em>overflow:hidden)，让它读懂filter:Alpha<br>3、在IE6、7、8中，设置了filter:Alpha的元素，父元素设置position:static(默认属性)，其子元素为相对定位，可让子元素不透明</p><pre><code class="html">&lt;!DOCTYPE html&gt;
+</code></pre><p>在background-color中使用rgba，标准浏览器中，背景透明，文字不透明，展现如下：<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714145427311-422392724.png" alt="此处输入图片的描述"><br>很奇葩的是，IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂rgba，解析后颜色为透明，其实应该是null<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714145634561-581154038.png" alt="此处输入图片的描述"><br>那么使用opacity实现背景透明，文字不透明是可取的。</p><p>IE专属滤镜 filter:Alpha(opacity=x)</p><p>使用说明：IE浏览器专属，问题多多，本文以设置背景透明为例子，如下：</p><p>1、仅支持IE6、7、8、9，在IE10版本被废除<br>2、在IE6、7中，需要激活IE的haslayout属性(如：<em>zoom:1或者</em>overflow:hidden)，让它读懂filter:Alpha<br>3、在IE6、7、8中，设置了filter:Alpha的元素，父元素设置position:static(默认属性)，其子元素为相对定位，可让子元素不透明</p><pre><code class="lang-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
@@ -198,10 +198,10 @@ body{
 &lt;div class=&quot;demo&quot;&gt;
     &lt;p&gt;背景透明，文字不透明&lt;/p&gt;
 &lt;/div&gt;
-</code></pre><p>全兼容的方案</p><p>上以上3点分析可知，设置透明背景文字不透明，可采用的属性有rgba和IE的专属滤镜filter:Alpha，其兼容性如下图所示：<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714145832186-131440309.png" alt="此处输入图片的描述"><br>针对IE6、7、8浏览器，我们可以采用fiter:Alpha，针对标准浏览器我们采用rgba，那么问题来了，IE9浏览器2个属性都支持，一起使用会重复降低不透明度…</p><p>那么，如何只对IE6、7、8使用fiter:Alpha如何实现呢？</p><pre><code class="css">/* 只支持IE6、7、8 */
+</code></pre><p>全兼容的方案</p><p>上以上3点分析可知，设置透明背景文字不透明，可采用的属性有rgba和IE的专属滤镜filter:Alpha，其兼容性如下图所示：<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160714145832186-131440309.png" alt="此处输入图片的描述"><br>针对IE6、7、8浏览器，我们可以采用fiter:Alpha，针对标准浏览器我们采用rgba，那么问题来了，IE9浏览器2个属性都支持，一起使用会重复降低不透明度…</p><p>那么，如何只对IE6、7、8使用fiter:Alpha如何实现呢？</p><pre><code class="lang-css">/* 只支持IE6、7、8 */
 
 @media \0screen\,screen\9 {...}
-</code></pre><p>ok，所有问题都解决了，全部代码如下：</p><pre><code class="html">&lt;!DOCTYPE html&gt;
+</code></pre><p>ok，所有问题都解决了，全部代码如下：</p><pre><code class="lang-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
@@ -263,7 +263,7 @@ body{
     <published>2016-06-22T06:17:49.000Z</published>
     <updated>2017-04-09T07:52:06.693Z</updated>
     
-    <content type="html"><![CDATA[<p>代码如下：<br><a id="more"></a></p><pre><code class="html">&lt;!DOCTYPE html&gt;
+    <content type="html"><![CDATA[<p>代码如下：<br><a id="more"></a></p><pre><code class="lang-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
 &lt;title&gt;&lt;/title&gt;
@@ -304,7 +304,7 @@ body{
 &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre><p>效果图如下<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160712220142201-677238748.png" alt="此处输入图片的描述"></p><pre><code class="html">&lt;!DOCTYPE html&gt;
+</code></pre><p>效果图如下<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160712220142201-677238748.png" alt="此处输入图片的描述"></p><pre><code class="lang-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
 &lt;title&gt;&lt;/title&gt;
@@ -393,8 +393,8 @@ body{
     <updated>2017-04-09T07:46:47.744Z</updated>
     
     <content type="html"><![CDATA[<p>1、向右的箭头&gt; .<br>看到很多网站里面向右的箭头都是图片代替的，但是为了网站的性能，我们一般的原则是能够避免使用图片的尽量不用图片<br><a id="more"></a><br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160706162126202-73429815.png" alt="此处输入图片的描述"><br>比如看下携程个人中心首页面，向右的箭头<br>其实现思路是这样的：定义一个正方形盒子，盒子边框定义1px的上边框和右边框，然后对盒子旋转45度即可。</p><pre><code>  代码如下：
-</code></pre><pre><code class="html">&lt;i class=&quot;arrow&quot;&gt;&lt;/i&gt;
-</code></pre><pre><code class="css">.arrow{
+</code></pre><pre><code class="lang-html">&lt;i class=&quot;arrow&quot;&gt;&lt;/i&gt;
+</code></pre><pre><code class="lang-css">.arrow{
      display: inline-block;
      width: 7px;
      height: 7px;
@@ -403,8 +403,8 @@ body{
      -webkit-transform:rotate(-45deg);
      transform:rotate(-45deg);
 }
-</code></pre><p>嘘…<br>我们能不能直接使用符号“ &gt; “这个呢。<br>来来来，看淘宝网<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160706163926796-488668722.png" alt="此处输入图片的描述"><br>审查元素之后发现它是这样实现的。</p><pre><code class="html">&lt;i class=&quot;tb-icon service-arrow&quot;&gt;➤&lt;/i&gt;
-</code></pre><pre><code class="css">.tb-icon{
+</code></pre><p>嘘…<br>我们能不能直接使用符号“ &gt; “这个呢。<br>来来来，看淘宝网<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160706163926796-488668722.png" alt="此处输入图片的描述"><br>审查元素之后发现它是这样实现的。</p><pre><code class="lang-html">&lt;i class=&quot;tb-icon service-arrow&quot;&gt;➤&lt;/i&gt;
+</code></pre><pre><code class="lang-css">.tb-icon{
     font-family: iconfont!important;
     font-size: 14px;
     font-style: normal;
@@ -413,19 +413,19 @@ body{
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-</code></pre><p>看到没，淘宝都这样做，我们何不借鉴下呢。</p><p>不过它在添加字符的时候额外修饰了一番。使用字体抗锯齿属性:-webkit-font-smoothing</p><p>对字体进行抗锯齿渲染可以使字体看起来会更清晰舒服。在图标字体成为一种趋势的今天，抗锯齿渲染使用也越来越多。</p><p>font-smoothing是非标准的CSS定义。它被列入标准规范的草案中，后由于某些原因从web标准中被移除了。</p><p>但是，我们可以用以下两种定义进行抗锯齿渲染</p><pre><code class="css">-webkit-font-smoothing: antialiased; /*chrome、safari*/
+</code></pre><p>看到没，淘宝都这样做，我们何不借鉴下呢。</p><p>不过它在添加字符的时候额外修饰了一番。使用字体抗锯齿属性:-webkit-font-smoothing</p><p>对字体进行抗锯齿渲染可以使字体看起来会更清晰舒服。在图标字体成为一种趋势的今天，抗锯齿渲染使用也越来越多。</p><p>font-smoothing是非标准的CSS定义。它被列入标准规范的草案中，后由于某些原因从web标准中被移除了。</p><p>但是，我们可以用以下两种定义进行抗锯齿渲染</p><pre><code class="lang-css">-webkit-font-smoothing: antialiased; /*chrome、safari*/
 -moz-osx-font-smoothing: grayscale;/*firefox*/
-</code></pre><p>（1）Webkit在自己的引擎中支持了这一效果。<br>-webkit-font-smoothing<br>它有三个属性值：<br>none —— 对低像素的文本比较好<br>subpixel-antialiased——默认值<br>antialiased ——抗锯齿很好<br>例子：</p><pre><code class="html">body{
+</code></pre><p>（1）Webkit在自己的引擎中支持了这一效果。<br>-webkit-font-smoothing<br>它有三个属性值：<br>none ——— 对低像素的文本比较好<br>subpixel-antialiased———默认值<br>antialiased ———抗锯齿很好<br>例子：</p><pre><code class="lang-html">body{
     -webkit-font-smoothing: antialiased;
 }
-</code></pre><p>这个属性可以使页面上的字体抗锯齿,使用后字体看起来会更清晰。加上之后就顿时感觉页面小清晰了。</p><p>（2）Gecko也推出了自己的抗锯齿效果的非标定义。<br>-moz-osx-font-smoothing: inherit | grayscale;<br>这个属性也是更清晰的作用。<br>例子：</p><pre><code class="css">.icon {
+</code></pre><p>这个属性可以使页面上的字体抗锯齿,使用后字体看起来会更清晰。加上之后就顿时感觉页面小清晰了。</p><p>（2）Gecko也推出了自己的抗锯齿效果的非标定义。<br>-moz-osx-font-smoothing: inherit | grayscale;<br>这个属性也是更清晰的作用。<br>例子：</p><pre><code class="lang-css">.icon {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-</code></pre><p>（3）Ionic框架在样式中多加了一条font-smoothing: antialiased;<br>这是坐等font-smoothing标准化，有备无患么。<br>当然了还有一种方法了，使用Art-Reactor | 字体图标集 这里面有很多很多图标方便我们使用，使用方法也比较简单，详细看看这个就知道了<br><a href="http://chinakids.github.io/Art-Reactor/" target="_blank" rel="external">http://chinakids.github.io/Art-Reactor/</a> 当然这个教程也不错 <a href="http://www.zcool.com.cn/article/ZMTc3NDg4.html" target="_blank" rel="external">http://www.zcool.com.cn/article/ZMTc3NDg4.html</a></p><pre><code class="html">&lt;div class=&quot;arr&quot;&gt;
+</code></pre><p>（3）Ionic框架在样式中多加了一条font-smoothing: antialiased;<br>这是坐等font-smoothing标准化，有备无患么。<br>当然了还有一种方法了，使用Art-Reactor | 字体图标集 这里面有很多很多图标方便我们使用，使用方法也比较简单，详细看看这个就知道了<br><a href="http://chinakids.github.io/Art-Reactor/" target="_blank" rel="external">http://chinakids.github.io/Art-Reactor/</a> 当然这个教程也不错 <a href="http://www.zcool.com.cn/article/ZMTc3NDg4.html" target="_blank" rel="external">http://www.zcool.com.cn/article/ZMTc3NDg4.html</a></p><pre><code class="lang-html">&lt;div class=&quot;arr&quot;&gt;
     &lt;i class=&quot;arrow&quot;&gt;&lt;/i&gt;
 &lt;/div&gt;
-</code></pre><pre><code class="css">.arr{
+</code></pre><pre><code class="lang-css">.arr{
     width:70px;
     height:70px;
     line-height:100px;
@@ -482,7 +482,7 @@ body{
     <published>2016-03-29T02:17:49.000Z</published>
     <updated>2017-04-09T07:46:26.598Z</updated>
     
-    <content type="html"><![CDATA[<p>先看下CSS盒模型<a id="more"></a><br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711094002342-1002700532.png" alt="此处输入图片的描述"></p><p>一个盒子包括: margin+border+padding+content上下左右边框交界处出呈现平滑的斜线.利用这个特点, 通过设置不同的上下左右边框宽度或者颜色可以得到小三角, 小梯形等.调整宽度大小可以调节三角形形状.一般情况下,我们设置盒子的宽高度, 及上下左右边框.</p><pre><code class="html">&lt;head&gt;
+    <content type="html"><![CDATA[<p>先看下CSS盒模型<a id="more"></a><br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711094002342-1002700532.png" alt="此处输入图片的描述"></p><p>一个盒子包括: margin+border+padding+content上下左右边框交界处出呈现平滑的斜线.利用这个特点, 通过设置不同的上下左右边框宽度或者颜色可以得到小三角, 小梯形等.调整宽度大小可以调节三角形形状.一般情况下,我们设置盒子的宽高度, 及上下左右边框.</p><pre><code class="lang-html">&lt;head&gt;
 &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
 &lt;title&gt;&lt;/title&gt;
 &lt;style type=&quot;text/css&quot;&gt;
@@ -498,7 +498,7 @@ body{
 &lt;body&gt;
 &lt;div class=&quot;test&quot;&gt;&lt;/div&gt;
 &lt;/body&gt;
-</code></pre><p><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711094248029-1341116506.png" alt="此处输入图片的描述"><br>根据盒子模型，我们把div宽高度都设为0时,</p><pre><code class="html">&lt;head&gt;
+</code></pre><p><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711094248029-1341116506.png" alt="此处输入图片的描述"><br>根据盒子模型，我们把div宽高度都设为0时,</p><pre><code class="lang-html">&lt;head&gt;
 &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
 &lt;title&gt;&lt;/title&gt;
 &lt;style type=&quot;text/css&quot;&gt;
@@ -514,7 +514,7 @@ body{
 &lt;body&gt;
 &lt;div class=&quot;test&quot;&gt;&lt;/div&gt;
 &lt;/body&gt;
-</code></pre><p><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711094452639-402904924.png" alt="此处输入图片的描述"><br>为了兼容IE6，需要添加代码 _font-size: 0; _line-height: 0;</p><pre><code class="html">&lt;head&gt;
+</code></pre><p><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711094452639-402904924.png" alt="此处输入图片的描述"><br>为了兼容IE6，需要添加代码 _font-size: 0; _line-height: 0;</p><pre><code class="lang-html">&lt;head&gt;
 &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
 &lt;title&gt;&lt;/title&gt;
 &lt;style type=&quot;text/css&quot;&gt;
@@ -533,7 +533,7 @@ body{
 &lt;body&gt;
 &lt;div class=&quot;test&quot;&gt;&lt;/div&gt;
 &lt;/body&gt;
-</code></pre><p>这时, 其实我们已经看到有上下左右四个三角形了..如果, 我们把4种颜色, 只保留一种颜色, 余下3种颜色设置为透明(或者设置为和背景色相同的颜色), 那不就是一个小三角了么</p><pre><code class="html">&lt;head&gt;
+</code></pre><p>这时, 其实我们已经看到有上下左右四个三角形了..如果, 我们把4种颜色, 只保留一种颜色, 余下3种颜色设置为透明(或者设置为和背景色相同的颜色), 那不就是一个小三角了么</p><pre><code class="lang-html">&lt;head&gt;
 &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
 &lt;title&gt;&lt;/title&gt;
 &lt;style type=&quot;text/css&quot;&gt;
@@ -552,7 +552,7 @@ body{
 &lt;body&gt;
 &lt;div class=&quot;test&quot;&gt;&lt;/div&gt;
 &lt;/body&gt;
-</code></pre><p>可是, IE6下不支持透明啊~~~, 会出现下图的样子（换句话说IE6不支持transparent，而使用默认的背景色黑色）<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711105412482-1182318162.gif" alt="此处输入图片的描述"><br>为了解决这个兼容性问题，IE6下, 设置余下三条边的border-style为dashed，利用虚线样式的border可以形成天然无污染的空白，即可达到透明的效果。<br>即把原来的代码中的</p><blockquote><p>border-style:solid;</p></blockquote><p>换成</p><blockquote><p>border-style:solid dashed dashed dashed;</p></blockquote><p>上面我们画的小三角的斜边都是依靠原来盒子的边, 还有另外一种形式的小三角, 就是斜边在盒子的对角线上<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711111044607-1148105790.png" alt="此处输入图片的描述"></p><pre><code class="html">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+</code></pre><p>可是, IE6下不支持透明啊~~~, 会出现下图的样子（换句话说IE6不支持transparent，而使用默认的背景色黑色）<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711105412482-1182318162.gif" alt="此处输入图片的描述"><br>为了解决这个兼容性问题，IE6下, 设置余下三条边的border-style为dashed，利用虚线样式的border可以形成天然无污染的空白，即可达到透明的效果。<br>即把原来的代码中的</p><blockquote><p>border-style:solid;</p></blockquote><p>换成</p><blockquote><p>border-style:solid dashed dashed dashed;</p></blockquote><p>上面我们画的小三角的斜边都是依靠原来盒子的边, 还有另外一种形式的小三角, 就是斜边在盒子的对角线上<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711111044607-1148105790.png" alt="此处输入图片的描述"></p><pre><code class="lang-html">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
 &lt;title&gt;&lt;/title&gt;
 &lt;style type=&quot;text/css&quot;&gt;
   .test{
@@ -570,7 +570,7 @@ body{
 &lt;body&gt;
 &lt;div class=&quot;test&quot;&gt;&lt;/div&gt;
 &lt;/body&gt;
-</code></pre><p>保留其中一种颜色, 就可以得到斜边在对角线上的三角形了…多个这样的三角形, 通过设置边框大小, 颜色, 拼凑起来可以形成任意形状的三角形.<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711111343873-1411124274.gif" alt="此处输入图片的描述"><br>像这种不规则的三角形, 延伸一下, 放在气泡框上, 就可以省去拼背景图片的麻烦了.<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711111410686-1577431584.gif" alt="此处输入图片的描述"><br>另外, 关于气泡框, 可以用特殊字符模拟小三角同样需要用到定位和重叠覆盖，只不过不需要调整border属性了。<br>先来看一个菱形“◆” ，它在页面中的代码是“&amp;#9670”，需要注意的是页面编码需要设置为utf-8，在网页中可以把◆当作文字处理，可以通过调整font-size来它的大小、通过color来设置它的颜色。<br>HTML结构依然用前面的，不同的是在em、span标签中加入了 ◆</p><pre><code class="html">&lt;head&gt;
+</code></pre><p>保留其中一种颜色, 就可以得到斜边在对角线上的三角形了…多个这样的三角形, 通过设置边框大小, 颜色, 拼凑起来可以形成任意形状的三角形.<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711111343873-1411124274.gif" alt="此处输入图片的描述"><br>像这种不规则的三角形, 延伸一下, 放在气泡框上, 就可以省去拼背景图片的麻烦了.<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711111410686-1577431584.gif" alt="此处输入图片的描述"><br>另外, 关于气泡框, 可以用特殊字符模拟小三角同样需要用到定位和重叠覆盖，只不过不需要调整border属性了。<br>先来看一个菱形“◆” ，它在页面中的代码是“&amp;#9670”，需要注意的是页面编码需要设置为utf-8，在网页中可以把◆当作文字处理，可以通过调整font-size来它的大小、通过color来设置它的颜色。<br>HTML结构依然用前面的，不同的是在em、span标签中加入了 ◆</p><pre><code class="lang-html">&lt;head&gt;
 &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
 &lt;title&gt;&lt;/title&gt;
 &lt;style type=&quot;text/css&quot;&gt;
@@ -623,10 +623,10 @@ body{
       CSS气泡框实现
   &lt;/div&gt;
 &lt;/body&gt;
-</code></pre><p>效果图为：<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711112905014-415961613.png" alt="此处输入图片的描述"><br>补充：以上方式实现小三角的过程中不可避免的增加了多余的标签，如果不要求所有浏览器中显示一致的话， 我们可以利用css3来实现这个小三角</p><pre><code class="html">&lt;div class=&quot;tag&quot;&gt;
+</code></pre><p>效果图为：<br><img src="http://images2015.cnblogs.com/blog/986385/201607/986385-20160711112905014-415961613.png" alt="此处输入图片的描述"><br>补充：以上方式实现小三角的过程中不可避免的增加了多余的标签，如果不要求所有浏览器中显示一致的话， 我们可以利用css3来实现这个小三角</p><pre><code class="lang-html">&lt;div class=&quot;tag&quot;&gt;
     css3气泡框
 &lt;/div&gt;
-</code></pre><pre><code class="css">.tag{
+</code></pre><pre><code class="lang-css">.tag{
     width:300px;
     height:100px;
     border:5px solid #09F;
