@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zuobaiquan.github.io/"/>
-  <updated>2017-04-29T15:38:02.482Z</updated>
+  <updated>2017-04-30T13:20:52.418Z</updated>
   <id>https://zuobaiquan.github.io/</id>
   
   <author>
@@ -14,6 +14,191 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vue组件--slot内容分发</title>
+    <link href="https://zuobaiquan.github.io/2017/04/30/vue%E7%BB%84%E4%BB%B6--slot%E5%86%85%E5%AE%B9%E5%88%86%E5%8F%91/"/>
+    <id>https://zuobaiquan.github.io/2017/04/30/vue组件--slot内容分发/</id>
+    <published>2017-04-30T13:11:49.000Z</published>
+    <updated>2017-04-30T13:20:52.418Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="①概述："><a href="#①概述：" class="headerlink" title="①概述："></a><strong>①概述：</strong></h3><p>简单来说，假如父组件需要在子组件内放一些DOM，那么这些DOM是显示、不显示、在哪个地方显示、如何显示，就是slot分发负责的活。<a id="more"></a></p><h3 id="②默认情况下"><a href="#②默认情况下" class="headerlink" title="②默认情况下"></a><strong>②默认情况下</strong></h3><p>父组件在子组件内套的内容，是不显示的。</p><p>例如代码：</p><pre><code class="html">&lt;div id=&quot;box&quot;&gt;
+    &lt;aaa&gt;
+        &lt;span&gt;text是否显示&lt;/span&gt;
+    &lt;/aaa&gt;
+    &lt;template id=&quot;tpl&quot;&gt;
+        &lt;p&gt;我是标签&lt;/p&gt;
+    &lt;/template&gt;
+&lt;/div&gt;
+&lt;script&gt;
+    var vm = new Vue({
+        el: &#39;#box&#39;,
+        components: {
+            &quot;aaa&quot;: {
+                template: &quot;#tpl&quot;
+            }
+        }
+    });
+&lt;/script&gt;
+</code></pre><p><img src="http://op5v2z251.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170430202314.png" alt=""></p><p>显示内容是一个 p 标签 的内容，不包含span标签里面的内容；</p><h3 id="③单个slot"><a href="#③单个slot" class="headerlink" title="③单个slot"></a><strong>③单个slot</strong></h3><p>简单来说，只使用这个标签的话，可以将父组件放在子组件的内容，放到想让他显示的地方。</p><pre><code class="html">&lt;div id=&quot;box&quot;&gt;
+    &lt;aaa&gt;
+
+    &lt;/aaa&gt;
+    &lt;template id=&quot;tpl&quot;&gt;
+        &lt;p&gt;我是标签&lt;/p&gt;
+        &lt;slot&gt;&lt;/slot&gt;
+    &lt;/template&gt;
+&lt;/div&gt;
+&lt;script&gt;
+    var vm = new Vue({
+        el: &#39;#box&#39;,
+        components: {
+            &quot;aaa&quot;: {
+                template: &quot;#tpl&quot;
+            }
+        }
+    });
+&lt;/script&gt;
+</code></pre><p><img src="http://op5v2z251.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170430202324.png" alt=""></p><p>这样写的话，结果是：</p><pre><code class="html">&lt;p&gt;我是标签&lt;/p&gt;
+&lt;span&gt;text是否显示&lt;/span&gt;
+</code></pre><p>即父组件放在子组件里的内容，插到了子组件的</p><pre><code>&lt;slot&gt;&lt;/slot&gt;
+</code></pre><p>位置；注意，即使有多个标签，会一起被插入，相当于用父组件放在子组件里的标签，替换了 slot 这个标签。</p><h3 id="④具名slot"><a href="#④具名slot" class="headerlink" title="④具名slot"></a><strong>④具名slot</strong></h3><p>将放在子组件里的不同html标签放在不同的位置</p><p>父组件在要分发的标签里添加 slot=”name名” 属性</p><p>子组件在对应分发的位置的slot标签里，添加name=”name名” 属性，</p><p>然后就会将对应的标签放在对应的位置了。</p><pre><code class="html">&lt;div id=&quot;box&quot;&gt;
+    &lt;aaa&gt;
+        &lt;span slot=&quot;second&quot;&gt;56789&lt;/span&gt;
+        &lt;span slot=&quot;first&quot;&gt;12345&lt;/span&gt;
+    &lt;/aaa&gt;
+    &lt;template id=&quot;tpl&quot;&gt;
+        &lt;p&gt;我是标签&lt;/p&gt;
+        &lt;slot name=&#39;first&#39;&gt;&lt;/slot&gt;
+        &lt;slot name=&#39;second&#39;&gt;&lt;/slot&gt;
+        &lt;!--显示次序看模板--&gt;
+    &lt;/template&gt;
+&lt;/div&gt;
+&lt;script&gt;
+    var vm = new Vue({
+        el: &#39;#box&#39;,
+        components: {
+            &quot;aaa&quot;: {
+                template: &quot;#tpl&quot;
+            }
+        }
+    });
+&lt;/script&gt;
+</code></pre><p><img src="http://op5v2z251.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170430202334.png" alt=""></p><pre><code class="html">&lt;p&gt;我是标签&lt;/p&gt;
+&lt;slot name=&#39;first&#39;&gt;12345&lt;/slot&gt;
+&lt;slot name=&#39;second&#39;&gt;56789&lt;/slot&gt;
+</code></pre><h3 id="⑤分发内容的作用域："><a href="#⑤分发内容的作用域：" class="headerlink" title="⑤分发内容的作用域："></a><strong>⑤分发内容的作用域：</strong></h3><p>被分发的内容的作用域，根据其所在模板决定，例如，以上标签，其在父组件的模板中（虽然其被子组件的children标签所包括，但由于他不在子组件的template属性中，因此不属于子组件），则受父组件所控制。</p><p>示例代码：</p><pre><code class="html">&lt;div id=&quot;box&quot;&gt;
+    &lt;aaa&gt;
+        &lt;span slot=&quot;second&quot;&gt;56789&lt;/span&gt;
+        &lt;span slot=&quot;first&quot; @click=&quot;tobeknow&quot;&gt;12345&lt;/span&gt;
+    &lt;/aaa&gt;
+    &lt;template id=&quot;tpl&quot;&gt;
+        &lt;p&gt;我是标签&lt;/p&gt;
+        &lt;slot name=&#39;first&#39;&gt;&lt;/slot&gt;
+        &lt;slot name=&#39;second&#39;&gt;&lt;/slot&gt;
+        &lt;!--显示次序看模板--&gt;
+    &lt;/template&gt;
+&lt;/div&gt;
+&lt;script&gt;
+    var vm = new Vue({
+        el: &#39;#box&#39;,
+        methods: {
+            tobeknow: function () {
+                alert(111111);
+            }
+        },
+        components: {
+            &quot;aaa&quot;: {
+                template: &quot;#tpl&quot;
+            }
+        }
+    });
+&lt;/script&gt;
+</code></pre><p>当点击文字12345的区域时（而不是按钮全部），会触发父组件的tobeknow方法。但是点击其他区域时则没有影响。</p><p>官方教程是这么说的：</p><blockquote><p>父组件模板的内容在父组件作用域内编译；子组件模板的内容在子组件作用域内编译</p></blockquote><h3 id="⑥当没有分发内容时的提示："><a href="#⑥当没有分发内容时的提示：" class="headerlink" title="⑥当没有分发内容时的提示："></a><strong>⑥当没有分发内容时的提示：</strong></h3><p>假如父组件没有在子组件中放置有标签，或者是父组件在子组件中放置标签，但有slot属性，而子组件中没有该slot属性的标签。那么，子组件的slot标签，将不会起到任何作用。除非，该slot标签内有内容，那么在无分发内容的时候，会显示该slot标签内的内容。</p><p>如示例代码：</p><pre><code class="html">&lt;div id=&quot;box&quot;&gt;
+    &lt;aaa&gt;
+        &lt;span slot=&quot;first&quot;&gt;【12345】&lt;/span&gt;
+    &lt;/aaa&gt;
+    &lt;template id=&quot;tpl&quot;&gt;
+        &lt;div&gt;
+            &lt;slot name=&#39;first&#39;&gt;&lt;/slot&gt;
+            &lt;p&gt;我是标签1&lt;/p&gt;
+            &lt;slot name=&#39;second&#39;&gt;&lt;/slot&gt;
+            &lt;p&gt;我是标签2&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/template&gt;
+&lt;/div&gt;
+&lt;script&gt;
+    var vm = new Vue({
+        el: &#39;#box&#39;,
+        components: {
+            &quot;aaa&quot;: {
+                template: &quot;#tpl&quot;
+            }
+        }
+    });
+&lt;/script&gt;
+</code></pre><p><img src="http://op5v2z251.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20170430205958.png" alt=""></p><p>说明：</p><p>【1】name=’first’的slot标签被父组件对应的标签所替换（slot标签内部的内容被舍弃）；</p><p>【2】name=’last’的slot标签，因为没有对应的内容，则显示该slot标签内部的内容。</p><h3 id="⑦假如想控制子组件根标签的属性"><a href="#⑦假如想控制子组件根标签的属性" class="headerlink" title="⑦假如想控制子组件根标签的属性"></a><strong>⑦假如想控制子组件根标签的属性</strong></h3><p>【1】首先，由于模板标签是属于父组件的，因此，将子组件的指令绑定在模板标签里，是不可以的（因为他归属于父组件）；</p><p>【2】假如需要通过父组件控制子组件是否显示（例如v-if或者v-show），那么这个指令显然是属于父组件的（例如放在父组件的data下面）。可以将标签写在子组件的模板上。</p><p>如代码：</p><pre><code class="html">&lt;div id=&quot;box&quot;&gt;
+    &lt;button @click=&quot;abc=!abc&quot;&gt;点击让子组件显示&lt;/button&gt;
+    &lt;aaa v-if=&quot;abc&quot;&gt;
+    &lt;/aaa&gt;
+&lt;/div&gt;
+&lt;script&gt;
+    var vm = new Vue({
+        el: &#39;#box&#39;,
+        data: {
+            &#39;abc&#39;: false
+        },
+        components: {
+            &quot;aaa&quot;: {
+                template: &quot;&lt;div&gt;这里是子组件&lt;/div&gt;&quot;
+            }
+        },
+    });
+&lt;/script&gt;
+</code></pre><p>说明：通过父组件（点击按钮，切换v-if指令的值）控制子组件是否显示。</p><p>【3】假如需要通过子组件，控制子组件是否显示（比如让他隐藏），那么这个指令显然是属于子组件的（会将值放在子组件的data属性下），那么就不能像上面这么写，而是必须放置在子组件的根标签中。</p><pre><code class="html">&lt;div id=&quot;box&quot;&gt;
+    &lt;button @click=&quot;toshow&quot;&gt;点击让子组件显示&lt;/button&gt;
+    &lt;aaa&gt;
+        &lt;span slot=&quot;first&quot;&gt;【12345】&lt;/span&gt;
+        &lt;!--上面这行不会显示--&gt;
+    &lt;/aaa&gt;
+&lt;/div&gt;
+&lt;script&gt;
+    var vm = new Vue({
+        el: &#39;#box&#39;,
+        methods: {
+            toshow: function () {
+                this.$children[0].tohidden = true;
+            }
+        },
+        components: {
+            &#39;aaa&#39;:{
+                template: &quot;&lt;div v-if=&#39;tohidden&#39; @click=&#39;tohide&#39;&gt;这里是子组件&lt;/div&gt;&quot;,
+                data: function () {
+                    return {
+                        tohidden: true
+                    }
+                },
+                methods: {
+                    tohide: function () {
+                        this.tohidden = !this.tohidden;
+                    }
+                }
+            }
+        },
+    });
+&lt;/script&gt;
+</code></pre><p>说明：</p><p>点击子组件会让子组件消失；</p><p>点击父组件的按钮，通过更改子组件的tohidden属性，让子组件重新显示。</p><p>子组件的指令绑定在子组件的模板之中（如此才能调用）；</p><p>参考文章：</p><p><a href="http://blog.csdn.net/sinat_17775997/article/details/52484072" target="_blank" rel="external">http://blog.csdn.net/sinat_17775997/article/details/52484072</a></p><p><a href="https://github.com/zuobaiquan/Vue/blob/master/04vue%E7%BB%84%E4%BB%B6/vue%E7%BB%84%E4%BB%B6slot.html" target="_blank" rel="external">https://github.com/zuobaiquan/Vue/blob/master/04vue%E7%BB%84%E4%BB%B6/vue%E7%BB%84%E4%BB%B6slot.html</a></p><p><a href="https://github.com/zuobaiquan/Vue/blob/master/04vue%E7%BB%84%E4%BB%B6/vue%E7%BB%84%E4%BB%B6%E5%A4%9A%E4%B8%AAslot.html" target="_blank" rel="external">https://github.com/zuobaiquan/Vue/blob/master/04vue%E7%BB%84%E4%BB%B6/vue%E7%BB%84%E4%BB%B6%E5%A4%9A%E4%B8%AAslot.html</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;①概述：&quot;&gt;&lt;a href=&quot;#①概述：&quot; class=&quot;headerlink&quot; title=&quot;①概述：&quot;&gt;&lt;/a&gt;&lt;strong&gt;①概述：&lt;/strong&gt;&lt;/h3&gt;&lt;p&gt;简单来说，假如父组件需要在子组件内放一些DOM，那么这些DOM是显示、不显示、在哪个地方显示、如何显示，就是slot分发负责的活。
+    
+    </summary>
+    
+    
+      <category term="Vue" scheme="https://zuobaiquan.github.io/tags/Vue/"/>
+    
+  </entry>
   
   <entry>
     <title>Vue中的计算属性与$watch</title>
@@ -102,9 +287,9 @@ computed: {
     <link href="https://zuobaiquan.github.io/2017/03/21/JS%E6%8E%92%E5%BA%8F%E6%80%BB%E7%BB%93/"/>
     <id>https://zuobaiquan.github.io/2017/03/21/JS排序总结/</id>
     <published>2017-03-21T08:01:49.000Z</published>
-    <updated>2017-04-30T06:43:28.785Z</updated>
+    <updated>2017-04-30T12:11:39.349Z</updated>
     
-    <content type="html"><![CDATA[<p>两路快排：</p><pre><code class="javascript">function partion(arr, low, high){
+    <content type="html"><![CDATA[<p>两路快排：<br><a id="more"></a></p><pre><code class="javascript">function partion(arr, low, high){
    var idx = low;
    var pivot = arr[low];
    while(low&lt;high){
@@ -271,10 +456,7 @@ function merge(leftarr, rightarr){
     
     <summary type="html">
     
-      &lt;p&gt;两路快排：&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;function partion(arr, low, high){
-   var idx = low;
-   var pivot = arr[low];
-   while(low&amp;lt;high)
+      &lt;p&gt;两路快排：&lt;br&gt;
     
     </summary>
     
@@ -1004,26 +1186,6 @@ body{
   </entry>
   
   <entry>
-    <title>2006年英语一 Part D</title>
-    <link href="https://zuobaiquan.github.io/2016/01/02/Z_English2006D/"/>
-    <id>https://zuobaiquan.github.io/2016/01/02/Z_English2006D/</id>
-    <published>2016-01-02T08:01:49.000Z</published>
-    <updated>2017-04-29T13:10:57.401Z</updated>
-    
-    <content type="html"><![CDATA[<p>Many things make people think artists are weird. But the weirdest may be this: artists’ only job is to explore emotions, and yet they choose to focus on the ones that feel bad.<a id="more"></a></p><p>This wasn’t always so. The earliest forms of art, like painting and music, are those best suited for expressing joy. But somewhere from the 19th century onward, more artists began seeing happiness as meaningless, phony or, worst of all, boring, as we went from Wordsworth’s daffodils to Baudelaire’s flowers of evil.</p><p>You could argue that art became more skeptical of happiness because modern times have seen so much misery. But it’s not as if earlier times didn’t know perpetual war, disaster and the massacre of innocents. The reason, in fact, may be just the opposite: there is too much damn happiness in the world today.</p><p>After all, what is the one modern form of expression almost completely dedicated to depicting happiness? Advertising. The rise of anti-happy art almost exactly tracks the emergence of mass media, and with it, a commercial culture in which happiness is not just an ideal but an ideology.</p><p>People in earlier eras were surrounded by reminders of misery. They worked until exhausted, lived with few protections and died young. In the West, before mass communication and literacy, the most powerful mass medium was the church, which reminded worshippers that their souls were in danger and that they would someday be meat for worms. Given all this, they did not exactly need their art to be a bummer too.</p><p>Today the messages the average Westerner is surrounded with are not religious but commercial, and forever happy. Fast-food eaters, news anchors, text messengers, all smiling, smiling, smiling. Our magazines feature beaming celebrities and happy families in perfect homes. And since these messages have an agenda – to lure us to open our wallets – they make the very idea of happiness seem unreliable. “Celebrate!” commanded the ads for the arthritis drug Celebrex, before we found out it could increase the risk of heart attacks.</p><p>But what we forget – what our economy depends on us forgetting – is that happiness is more than pleasure without pain. The things that bring the greatest joy carry the greatest potential for loss and disappointment. Today, surrounded by promises of easy happiness, we need art to tell us, as religion once did, Memento mori: remember that you will die, that everything ends, and that happiness comes not in denying this but in living with it. It’s a message even more bitter than a clove cigarette, yet, somehow, a breath of fresh air.</p><ol><li>By citing the examples of poets Wordsworth and Baudelaire, the author intends to show that <strong><em>__</em></strong>.<br>[A] poetry is not as expressive of joy as painting or music<br>[B] art grows out of both positive and negative feelings<br>[C] poets today are less skeptical of happiness<br>[D] artists have changed their focus of interest</li><li>The word “bummer” (Line 5, paragraph 5) most probably means something <strong><em>__</em></strong>.<br>[A] religious [B] unpleasant [C] entertaining [D] commercial<br>38.In the author’s opinion, advertising <strong><em>__</em></strong>.<br>[A] emerges in the wake of the anti-happy art<br>[B] is a cause of disappointment for the general public<br>[C] replaces the church as a major source of information<br>[D] creates an illusion of happiness rather than happiness itself</li><li>We can learn from the last paragraph that the author believes <strong><em>__</em></strong>.<br>[A] happiness more often than not ends in sadness<br>[B] the anti-happy art is distasteful but refreshing<br>[C] misery should be enjoyed rather than denied<br>[D] the anti-happy art flourishes when economy booms</li><li>Which of the following is true of the text?<br>[A] Religion once functioned as a reminder of misery.<br>[B] Art provides a balance between expectation and reality.<br>[C] People feel disappointed at the realities of modern society.<br>[D] Mass media are inclined to cover disasters and deaths.</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Many things make people think artists are weird. But the weirdest may be this: artists’ only job is to explore emotions, and yet they choose to focus on the ones that feel bad.
-    
-    </summary>
-    
-    
-      <category term="英语学习" scheme="https://zuobaiquan.github.io/tags/%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
     <title>2006年英语一 Part A</title>
     <link href="https://zuobaiquan.github.io/2016/01/02/Z_English2006A/"/>
     <id>https://zuobaiquan.github.io/2016/01/02/Z_English2006A/</id>
@@ -1044,17 +1206,17 @@ body{
   </entry>
   
   <entry>
-    <title>2006年英语一 Part C</title>
-    <link href="https://zuobaiquan.github.io/2016/01/02/Z_English2006C/"/>
-    <id>https://zuobaiquan.github.io/2016/01/02/Z_English2006C/</id>
+    <title>2005年英语一 Part D</title>
+    <link href="https://zuobaiquan.github.io/2016/01/02/Z_English2005D/"/>
+    <id>https://zuobaiquan.github.io/2016/01/02/Z_English2005D/</id>
     <published>2016-01-02T08:01:49.000Z</published>
-    <updated>2017-04-29T12:45:26.859Z</updated>
+    <updated>2017-04-29T12:39:01.849Z</updated>
     
-    <content type="html"><![CDATA[<p>When prehistoric man arrived in new parts of the world, something strange happened to the large animals.<a id="more"></a> They suddenly became extinct. Smaller species survived. The large, slow-growing animals were easy game, and were quickly hunted to extinction. Now something similar could be happening in the oceans.</p><p>That the seas are being overfished has been known for years. What researchers such as Ransom Myers and Boris Worm have shown is just how fast things are changing. They have looked at half a century of data from fisheries around the world. Their methods do not attempt to estimate the actual biomass (the amount of living biological matter) of fish species in particular parts of the ocean, but rather changes in that biomass over time. According to their latest paper published in Nature, the biomass of large predators (animals that kill and eat other animals) in a new fishery is reduced on average by 80% within 15 years of the start of exploitation. In some long-fished areas, it has halved again since then.</p><p>Dr. Worm acknowledges that these figures are conservative. One reason for this is that fishing technology has improved. Today’s vessels can find their prey using satellites and sonar, which were not available 50 years ago. That means a higher proportion of what is in the sea is being caught, so the real difference between present and past is likely to be worse than the one recorded by changes in catch sizes. In the early days, too, longlines would have been more saturated with fish. Some individuals would therefore not have been caught, since no baited hooks would have been available to trap them, leading to an underestimate of fish stocks in the past. Furthermore, in the early days of longline fishing, a lot of fish were lost to sharks after they had been hooked. That is no longer a problem, because there are fewer sharks around now.</p><p>Dr. Myers and Dr. Worm argue that their work gives a correct baseline, which future management efforts must take into account. They believe the data support an idea current among marine biologists, that of the “shifting baseline.” The notion is that people have failed to detect the massive changes which have happened in the ocean because they have been looking back only a relatively short time into the past. That matters because theory suggests that the maximum sustainable yield that can be cropped from a fishery comes when the biomass of a target species is about 50% of its original levels. Most fisheries are well below that, which is a bad way to do business.</p><ol><li>The extinction of large prehistoric animals is noted to suggest that <strong><em>__</em></strong>.<br>[A] large animal were vulnerable to the changing environment<br>[B] small species survived as large animals disappeared<br>[C] large sea animals may face the same threat today<br>[D] slow-growing fish outlive fast-growing ones</li><li>We can infer from Dr. Myers and Dr. Worm’s paper that <strong><em>__</em></strong>.<br>[A] the stock of large predators in some old fisheries has reduced by 90%<br>[B] there are only half as many fisheries as there were 15 years ago<br>[C] the catch sizes in new fisheries are only 20% of the original amount<br>[D] the number of larger predators dropped faster in new fisheries than in the old</li><li>By saying “these figures are conservative” (Line 1, paragraph 3), Dr. Worm means that <strong><em>__</em></strong>.<br>[A] fishing technology has improved rapidly<br>[B] the catch-sizes are actually smaller than recorded<br>[C] the marine biomass has suffered a greater loss<br>[D] the data collected so far are out of date</li><li>Dr. Myers and other researchers hold that <strong><em>__</em></strong>.<br>[A] people should look for a baseline that can work for a longer time<br>[B] fisheries should keep their yields below 50% of the biomass<br>[C] the ocean biomass should be restored to its original level<br>[D] people should adjust the fishing baseline to the changing situation</li><li>The author seems to be mainly concerned with most fisheries’ <strong><em>__</em></strong>.<br>[A] management efficiency [B] biomass level<br>[C] catch-size limits [D] technological application</li></ol>]]></content>
+    <content type="html"><![CDATA[<p>American no longer expect public figures, whether in speech or in writing, to command the English language with skill and gift.<a id="more"></a> Nor do they aspire to such command themselves. In his latest book, Doing Our Own Thing. The Degradation of language and Music and why we should like, care, John McWhorter, a linguist and controversialist of mixed liberal and conservative views, sees the triumph of 1960s counter-culture as responsible for the decline of formal English.</p><p>But the cult of the authentic and the personal, “doing our own thing”, has spelt the death of formal speech, writing, poetry and music. While even the modestly educated sought an elevated tone when they put pen to paper before the 1960s, even the most well regarded writing since then has sought to capture spoken English on the page. Equally, in poetry, the highly personal, performative genre is the only form that could claim real liveliness. In both oral and written English, talking is triumphing over speaking, spontaneity over craft.</p><p>Illustrated with an entertaining array of examples from both high and low culture, the trend that Mr. McWhorter documents is unmistakable. But it is less clear, to take the question of his subtitle, why we should, like care. As a linguist, he acknowledges that all varieties of human language, including non-standard ones like Black English, can be powerfully expressive-there exists no language or dialect in the world that cannot convey complex ideas He is not arguing, as many do, that we can no longer think straight because we do not talk proper.</p><p>Russians have a deep love for their own language and carry large chunks of memorized poetry in their heads, while Italian politicians tend to elaborate speech that would seem old-fashioned to most English-speakers. Mr. McWhorter acknowledges that formal language is not strictly necessary, and proposes no radical education reforms-he is really grieving over the loss of something beautiful more than useful. We now take our English “on paper plates instead of china”. A shame, perhaps, but probably an inevitable one.</p><ol><li><p>According to Mc Whorter, the decline of formal English <strong><strong>__</strong></strong>.<br>A. is inevitable in radical education reforms.<br>B. is but all too natural in language development.<br>C. has caused the controversy over the counter-culture.<br>D. brought about changes in public attitudes in the 1960s.</p></li><li><p>The word “talking” (Linge6, paragraph3) denotes <strong><strong>__</strong></strong>.<br>A. modesty. B. personality. C. liveliness. D. informality.</p></li><li><p>To which of the following statements would Mc Whorter most likely agree?<br>A. Logical thinking is not necessarily related to the way we talk.<br>B. Black English can be more expressive than standard English.<br>C. Non-standard varieties of human language are just as entertaining.<br>D. Of all the varieties, standard English Can best convey complex ideas.</p></li><li><p>The description of Russians’ love of memorizing poetry shows the author’s <strong><strong>__</strong></strong>.<br>A. interest in their language. B. appreciation of their efforts.<br>C. admiration for their memory. D. contempt for their old-fashionedness.</p></li><li><p>According to the last paragraph, “paper plates” is to “china” as <strong><strong>__</strong></strong>.<br>A. “temporary” is to “permanent”. B. “radical” is to “conservative”.<br>C. “functional” is to “artistic”. D. “humble” is to “noble”.</p></li></ol>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;When prehistoric man arrived in new parts of the world, something strange happened to the large animals.
+      &lt;p&gt;American no longer expect public figures, whether in speech or in writing, to command the English language with skill and gift.
     
     </summary>
     
@@ -1064,17 +1226,17 @@ body{
   </entry>
   
   <entry>
-    <title>2007年英语一 Part B</title>
-    <link href="https://zuobaiquan.github.io/2016/01/02/Z_English2007B/"/>
-    <id>https://zuobaiquan.github.io/2016/01/02/Z_English2007B/</id>
+    <title>2006年英语一 Part D</title>
+    <link href="https://zuobaiquan.github.io/2016/01/02/Z_English2006D/"/>
+    <id>https://zuobaiquan.github.io/2016/01/02/Z_English2006D/</id>
     <published>2016-01-02T08:01:49.000Z</published>
-    <updated>2017-04-29T13:12:18.169Z</updated>
+    <updated>2017-04-29T13:10:57.401Z</updated>
     
-    <content type="html"><![CDATA[<p>For the past several years, the Sunday newspaper supplement Parade has featured a column called “Ask Marilyn.”<a id="more"></a> People are invited to query Marilyn vos Savant, who at age 10 had tested at a mental level of someone about 23 years old; that gave her an IQ of 228 – the highest score ever recorded. IQ tests ask you to complete verbal and visual analogies, to envision paper after it has been folded and cut, and to deduce numerical sequences, among other similar tasks. So it is a bit confusing when vos Savant fields such queries from the average Joe (whose IQ is 100) as, What’s the difference between love and fondness? Or what is the nature of luck and coincidence? It’s not obvious how the capacity to visualize objects and to figure out numerical patterns suits one to answer questions that have eluded some of the best poets and philosophers.</p><p>Clearly, intelligence encompasses more than a score on a test. Just what does it mean to be smart? How much of intelligence can be specified, and how much can we learn about it from neurology, genetics, computer science and other fields?</p><p>The defining term of intelligence in humans still seems to be the IQ score, even though IQ tests are not given as often as they used to be. The test comes primarily in two forms: the Stanford-Binet Intelligence Scale and the Wechsler Intelligence Scales (both come in adult and children’s version). Generally costing several hundred dollars, they are usually given only by psychologists, although variations of them populate bookstores and the World Wide Web. Superhigh scores like vos Savant’s are no longer possible, because scoring is now based on a statistical population distribution among age peers, rather than simply dividing the mental age by the chronological age and multiplying by 100. Other standardized tests, such as the Scholastic Assessment Test (SAT) and the Graduate Record Exam (GRE), capture the main aspects of IQ tests.</p><p>Such standardized tests may not assess all the important elements necessary to succeed in school and in life, argues Robert J. Sternberg. In his article “How Intelligent Is Intelligence Testing?”, Sternberg notes that traditional test best assess analytical and verbal skills but fail to measure creativity and practical knowledge, components also critical to problem solving and life success. Moreover, IQ tests do not necessarily predict so well once populations or situations change. Research has found that IQ predicted leadership skills when the tests were given under low-stress conditions, but under high-stress conditions, IQ was negatively correlated with leadership – that is, it predicted the opposite. Anyone who has toiled through SAT will testify that test-taking skill also matters, whether it’s knowing when to guess or what questions to skip.</p><ol><li>Which of the following may be required in an intelligence test?<br>[A] Answering philosophical questions.<br>[B] Folding or cutting paper into different shapes.<br>[C] Telling the differences between certain concepts.<br>[D] Choosing words or graphs similar to the given ones.</li><li>What can be inferred about intelligence testing from Paragraph 3?<br>[A] People no longer use IQ scores as an indicator of intelligence.<br>[B] More versions of IQ tests are now available on the Internet.<br>[C] The test contents and formats for adults and children may be different.<br>[D] Scientists have defined the important elements of human intelligence.</li><li>People nowadays can no longer achieve IQ scores as high as vos Savant’s because<br>[A] the scores are obtained through different computational procedures.<br>[B] creativity rather than analytical skills is emphasized now.<br>[C] vos Savant’s case is an extreme one that will not repeat.<br>[D] the defining characteristic of IQ tests has changed.</li><li>We can conclude from the last paragraph that<br>[A] test scores may not be reliable indicators of one’s ability.<br>[B] IQ scores and SAT results are highly correlated.<br>[C] testing involves a lot of guesswork.<br>[D] traditional test are out of date.</li><li>What is the author’s attitude towards IQ tests?<br>[A] Supportive. [B] Skeptical. [C] Impartial. [D] Biased.</li></ol>]]></content>
+    <content type="html"><![CDATA[<p>Many things make people think artists are weird. But the weirdest may be this: artists’ only job is to explore emotions, and yet they choose to focus on the ones that feel bad.<a id="more"></a></p><p>This wasn’t always so. The earliest forms of art, like painting and music, are those best suited for expressing joy. But somewhere from the 19th century onward, more artists began seeing happiness as meaningless, phony or, worst of all, boring, as we went from Wordsworth’s daffodils to Baudelaire’s flowers of evil.</p><p>You could argue that art became more skeptical of happiness because modern times have seen so much misery. But it’s not as if earlier times didn’t know perpetual war, disaster and the massacre of innocents. The reason, in fact, may be just the opposite: there is too much damn happiness in the world today.</p><p>After all, what is the one modern form of expression almost completely dedicated to depicting happiness? Advertising. The rise of anti-happy art almost exactly tracks the emergence of mass media, and with it, a commercial culture in which happiness is not just an ideal but an ideology.</p><p>People in earlier eras were surrounded by reminders of misery. They worked until exhausted, lived with few protections and died young. In the West, before mass communication and literacy, the most powerful mass medium was the church, which reminded worshippers that their souls were in danger and that they would someday be meat for worms. Given all this, they did not exactly need their art to be a bummer too.</p><p>Today the messages the average Westerner is surrounded with are not religious but commercial, and forever happy. Fast-food eaters, news anchors, text messengers, all smiling, smiling, smiling. Our magazines feature beaming celebrities and happy families in perfect homes. And since these messages have an agenda – to lure us to open our wallets – they make the very idea of happiness seem unreliable. “Celebrate!” commanded the ads for the arthritis drug Celebrex, before we found out it could increase the risk of heart attacks.</p><p>But what we forget – what our economy depends on us forgetting – is that happiness is more than pleasure without pain. The things that bring the greatest joy carry the greatest potential for loss and disappointment. Today, surrounded by promises of easy happiness, we need art to tell us, as religion once did, Memento mori: remember that you will die, that everything ends, and that happiness comes not in denying this but in living with it. It’s a message even more bitter than a clove cigarette, yet, somehow, a breath of fresh air.</p><ol><li>By citing the examples of poets Wordsworth and Baudelaire, the author intends to show that <strong><em>__</em></strong>.<br>[A] poetry is not as expressive of joy as painting or music<br>[B] art grows out of both positive and negative feelings<br>[C] poets today are less skeptical of happiness<br>[D] artists have changed their focus of interest</li><li>The word “bummer” (Line 5, paragraph 5) most probably means something <strong><em>__</em></strong>.<br>[A] religious [B] unpleasant [C] entertaining [D] commercial<br>38.In the author’s opinion, advertising <strong><em>__</em></strong>.<br>[A] emerges in the wake of the anti-happy art<br>[B] is a cause of disappointment for the general public<br>[C] replaces the church as a major source of information<br>[D] creates an illusion of happiness rather than happiness itself</li><li>We can learn from the last paragraph that the author believes <strong><em>__</em></strong>.<br>[A] happiness more often than not ends in sadness<br>[B] the anti-happy art is distasteful but refreshing<br>[C] misery should be enjoyed rather than denied<br>[D] the anti-happy art flourishes when economy booms</li><li>Which of the following is true of the text?<br>[A] Religion once functioned as a reminder of misery.<br>[B] Art provides a balance between expectation and reality.<br>[C] People feel disappointed at the realities of modern society.<br>[D] Mass media are inclined to cover disasters and deaths.</li></ol>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;For the past several years, the Sunday newspaper supplement Parade has featured a column called “Ask Marilyn.”
+      &lt;p&gt;Many things make people think artists are weird. But the weirdest may be this: artists’ only job is to explore emotions, and yet they choose to focus on the ones that feel bad.
     
     </summary>
     
@@ -1104,6 +1266,46 @@ body{
   </entry>
   
   <entry>
+    <title>2007年英语一 Part B</title>
+    <link href="https://zuobaiquan.github.io/2016/01/02/Z_English2007B/"/>
+    <id>https://zuobaiquan.github.io/2016/01/02/Z_English2007B/</id>
+    <published>2016-01-02T08:01:49.000Z</published>
+    <updated>2017-04-29T13:12:18.169Z</updated>
+    
+    <content type="html"><![CDATA[<p>For the past several years, the Sunday newspaper supplement Parade has featured a column called “Ask Marilyn.”<a id="more"></a> People are invited to query Marilyn vos Savant, who at age 10 had tested at a mental level of someone about 23 years old; that gave her an IQ of 228 – the highest score ever recorded. IQ tests ask you to complete verbal and visual analogies, to envision paper after it has been folded and cut, and to deduce numerical sequences, among other similar tasks. So it is a bit confusing when vos Savant fields such queries from the average Joe (whose IQ is 100) as, What’s the difference between love and fondness? Or what is the nature of luck and coincidence? It’s not obvious how the capacity to visualize objects and to figure out numerical patterns suits one to answer questions that have eluded some of the best poets and philosophers.</p><p>Clearly, intelligence encompasses more than a score on a test. Just what does it mean to be smart? How much of intelligence can be specified, and how much can we learn about it from neurology, genetics, computer science and other fields?</p><p>The defining term of intelligence in humans still seems to be the IQ score, even though IQ tests are not given as often as they used to be. The test comes primarily in two forms: the Stanford-Binet Intelligence Scale and the Wechsler Intelligence Scales (both come in adult and children’s version). Generally costing several hundred dollars, they are usually given only by psychologists, although variations of them populate bookstores and the World Wide Web. Superhigh scores like vos Savant’s are no longer possible, because scoring is now based on a statistical population distribution among age peers, rather than simply dividing the mental age by the chronological age and multiplying by 100. Other standardized tests, such as the Scholastic Assessment Test (SAT) and the Graduate Record Exam (GRE), capture the main aspects of IQ tests.</p><p>Such standardized tests may not assess all the important elements necessary to succeed in school and in life, argues Robert J. Sternberg. In his article “How Intelligent Is Intelligence Testing?”, Sternberg notes that traditional test best assess analytical and verbal skills but fail to measure creativity and practical knowledge, components also critical to problem solving and life success. Moreover, IQ tests do not necessarily predict so well once populations or situations change. Research has found that IQ predicted leadership skills when the tests were given under low-stress conditions, but under high-stress conditions, IQ was negatively correlated with leadership – that is, it predicted the opposite. Anyone who has toiled through SAT will testify that test-taking skill also matters, whether it’s knowing when to guess or what questions to skip.</p><ol><li>Which of the following may be required in an intelligence test?<br>[A] Answering philosophical questions.<br>[B] Folding or cutting paper into different shapes.<br>[C] Telling the differences between certain concepts.<br>[D] Choosing words or graphs similar to the given ones.</li><li>What can be inferred about intelligence testing from Paragraph 3?<br>[A] People no longer use IQ scores as an indicator of intelligence.<br>[B] More versions of IQ tests are now available on the Internet.<br>[C] The test contents and formats for adults and children may be different.<br>[D] Scientists have defined the important elements of human intelligence.</li><li>People nowadays can no longer achieve IQ scores as high as vos Savant’s because<br>[A] the scores are obtained through different computational procedures.<br>[B] creativity rather than analytical skills is emphasized now.<br>[C] vos Savant’s case is an extreme one that will not repeat.<br>[D] the defining characteristic of IQ tests has changed.</li><li>We can conclude from the last paragraph that<br>[A] test scores may not be reliable indicators of one’s ability.<br>[B] IQ scores and SAT results are highly correlated.<br>[C] testing involves a lot of guesswork.<br>[D] traditional test are out of date.</li><li>What is the author’s attitude towards IQ tests?<br>[A] Supportive. [B] Skeptical. [C] Impartial. [D] Biased.</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;For the past several years, the Sunday newspaper supplement Parade has featured a column called “Ask Marilyn.”
+    
+    </summary>
+    
+    
+      <category term="英语学习" scheme="https://zuobaiquan.github.io/tags/%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2007年英语一 Part C</title>
+    <link href="https://zuobaiquan.github.io/2016/01/02/Z_English2007C/"/>
+    <id>https://zuobaiquan.github.io/2016/01/02/Z_English2007C/</id>
+    <published>2016-01-02T08:01:49.000Z</published>
+    <updated>2017-04-29T13:11:41.633Z</updated>
+    
+    <content type="html"><![CDATA[<p>During the past generation, the American middle-class family that once could count on hard work and fair play to keep itself financially secure had been transformed by economic risk and new realities.<a id="more"></a> Now a pink slip, a bad diagnosis, or a disappearing spouse can reduce a family from solidly middle class to newly poor in a few months.</p><p>In just one generation, millions of mothers have gone to work, transforming basic family economics. Scholars, policymakers, and critics of all stripes have debated the social implications of these changes, but few have looked at the side effect: family risk has risen as well. Today’s families have budgeted to the limits of their new two-paycheck status. As a result, they have lost the parachute they once had in times of financial setback – a back-up earner (usually Mom) who could go into the workforce if the primary earner got laid off or fell sick. This “added-worker effect” could support the safety net offered by unemployment insurance or disability insurance to help families weather bad times. But today, a disruption to family fortunes can no longer be made up with extra income from an otherwise-stay-at-home partner.</p><p>During the same period, families have been asked to absorb much more risk in their retirement income. Steelworkers, airline employees, and now those in the auto industry are joining millions of families who must worry about interest rates, stock market fluctuation, and the harsh reality that they may outlive their retirement money. For much of the past year, President Bush campaigned to move Social Security to a saving-account model, with retirees trading much or all of their guaranteed payments for payments depending on investment returns. For younger families, the picture is not any better. Both the absolute cost of healthcare and the share of it borne by families have risen – and newly fashionable health-savings plans are spreading from legislative halls to Wal-Mart workers, with much higher deductibles and a large new dose of investment risk for families’ future healthcare. Even demographics are working against the middle class family, as the odds of having a weak elderly parent – and all the attendant need for physical and financial assistance – have jumped eightfold in just one generation.</p><p>From the middle-class family perspective, much of this, understandably, looks far less like an opportunity to exercise more financial responsibility, and a good deal more like a frightening acceleration of the wholesale shift of financial risk onto their already overburdened shoulders. The financial fallout has begun, and the political fallout may not be far behind.</p><ol><li>Today’s double-income families are at greater financial risk in that<br>[A] the safety net they used to enjoy has disappeared.<br>[B] their chances of being laid off have greatly increased.<br>[C] they are more vulnerable to changes in family economics.<br>[D] they are deprived of unemployment or disability insurance.</li><li>As a result of President Bush’s reform, retired people may have<br>[A] a higher sense of security. [B] less secured payments.<br>[C] less chance to invest. [D] a guaranteed future.</li><li>According to the author, health-savings plans will<br>[A] help reduce the cost of healthcare.[B] popularize among the middle class.<br>[C] compensate for the reduced pensions.<br>[D] increase the families’ investment risk.</li><li>It can be inferred from the last paragraph that<br>[A] financial risks tend to outweigh political risks.<br>[B] the middle class may face greater political challenges.<br>[C] financial problems may bring about political problems.<br>[D] financial responsibility is an indicator of political status.</li><li>Which of the following is the best title for this text?<br>[A] The Middle Class on the Alert [B] The Middle Class on the Cliff<br>[C] The Middle Class in Conflict [D] The Middle Class in Ruins</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;During the past generation, the American middle-class family that once could count on hard work and fair play to keep itself financially secure had been transformed by economic risk and new realities.
+    
+    </summary>
+    
+    
+      <category term="英语学习" scheme="https://zuobaiquan.github.io/tags/%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>2007年英语一 Part D</title>
     <link href="https://zuobaiquan.github.io/2016/01/02/Z_English2007D/"/>
     <id>https://zuobaiquan.github.io/2016/01/02/Z_English2007D/</id>
@@ -1124,57 +1326,17 @@ body{
   </entry>
   
   <entry>
-    <title>2004年英语一 Part D</title>
-    <link href="https://zuobaiquan.github.io/2016/01/02/Z_English2004D/"/>
-    <id>https://zuobaiquan.github.io/2016/01/02/Z_English2004D/</id>
+    <title>2006年英语一 Part B</title>
+    <link href="https://zuobaiquan.github.io/2016/01/02/Z_English2006B/"/>
+    <id>https://zuobaiquan.github.io/2016/01/02/Z_English2006B/</id>
     <published>2016-01-02T08:01:49.000Z</published>
-    <updated>2017-04-29T12:30:17.454Z</updated>
+    <updated>2017-04-29T13:10:37.275Z</updated>
     
-    <content type="html"><![CDATA[<p>Americans today don’t place a very high value on intellect. Our heroes are athletes, entertainers, and entrepreneurs, not scholars.<a id="more"></a> Even our schools are where we send our children to get a practical education – not to pursue knowledge for the sake of knowledge. Symptoms of pervasive anti-intellectualism in our schools aren’t difficult to find.</p><p>“Schools have always been in a society where practical is more important than intellectual, ” says education writer Diane Ravitch. “Schools could be a counterbalance.” Razitch’s latest bock, Left Back: A Century of Failed School Reforms, traces the roots of anti-intellectualism in our schools, concluding they are anything</p><p>But a counterbalance to the American distaste for intellectual pursuits.<br>But they could and should be. Encouraging kids to reject the life of the mind leaves them vulnerable to exploitation and control. Without the ability to think critically, to defend their ideas and understand the ideas of others, they cannot fully participate in our democracy. Continuing along this path, says writer Earl Shorris, “We will become a second-rate country. We will have a less civil society.”</p><p>“Intellect is resented as a form of power or privilege, ” writes historian and professor Richard Hofstadter in Anti-Intellectualism in American life, a Pulitzer Prize winning book on the roots of anti-intellectualism in US politics, religion, and education. From the beginning of our history, says Hofstadter, our democratic and populist urges have driven us to reject anything that smells of elitism. Practicality, common sense, and native intelligence have been considered more noble qualities than anything you could learn from a book.</p><p>Ralph Waldo Emerson and other Transcendentalist philosophers thought schooling and rigorous book learning put unnatural restraints on children: “We are shut up in schools and college recitation rooms for 10 or 15 years and come out at last with a bellyful of words and do not know a thing.” Mark Twain’s Huckleberry Finn exemplified American anti-intellectualism. Its hero avoids being civilized – going to school and learning to read – so he can preserve his innate goodness.</p><p>Intellect, according to Hofstadter, is different from native intelligence, a quality we reluctantly admire. Intellect is the critical, creative, and contemplative side of the mind. Intelligence seeks to grasp, manipulate, re-order, and adjust, while intellect examines, ponders, wonders, theorizes, criticizes and imagines.</p><p>School remains a place where intellect is mistrusted. Hofstadter says our country’s educational system is in the grips of people who “joyfully and militantly proclaim their hostility to intellect and their eagerness to identify with children who show the least intellectual promise.”</p><ol><li><p>What do American parents expect their children to acquire in school?<br>[A] The habit of thinking independently. [B] Profound knowledge of the world.<br>[C] Practical abilities for future career. [D] The confidence in intellectual pursuits.</p></li><li><p>We can learn from the text that Americans have a history of <strong><strong>__</strong></strong>.<br>[A] undervaluing intellect. [B] favoring intellectualism.<br>[C] supporting school reform. [D] suppressing native intelligence.</p></li><li><p>The views of Ravish and Emerson on schooling are <strong><strong>__</strong></strong>.<br>[A] identical. [B] similar. [C] complementary. [D] opposite.</p></li><li><p>Emerson, according to the text, is probably <strong><strong>__</strong></strong>.<br>[A] a pioneer of education reform. [B] an opponent of intellectualism.<br>[C] a scholar in favor of intellect. [D] an advocate of regular schooling.</p></li><li><p>What does the author think of intellect?<br>[A] It is second to intelligence. [B] It evolves from common sense.<br>[C] It is to be pursued. [D] It underlies power.</p></li></ol>]]></content>
+    <content type="html"><![CDATA[<p>Stratford-on-Avon, as we all know, has only one industry – William Shakespeare – but there are two distinctly separate and increasingly hostile branches.<a id="more"></a> There is the Royal Shakespeare Company (RSC), which presents superb productions of the plays at the Shakespeare Memorial Theatre on the Avon. And there are the townsfolk who largely live off the tourists who come, not to see the plays, but to look at Anne Hathaway’s Cottage, Shakespeare’s birthplace and the other sights.</p><p>The worthy residents of Stratford doubt that the theatre adds a penny to their revenue. They frankly dislike the RSC’s actors, them with their long hair and beards and sandals and noisiness. It’s all deliciously ironic when you consider that Shakespeare, who earns their living, was himself an actor (with a beard) and did his share of noise-making.</p><p>The tourist streams are not entirely separate. The sightseers who come by bus – and often take in Warwick Castle and Blenheim Palace on the side – don’t usually see the plays, and some of them are even surprised to find a theatre in Stratford. However, the playgoers do manage a little sight-seeing along with their playgoing. It is the playgoers, the RSC contends, who bring in much of the town’s revenue because they spend the night (some of them four or five nights) pouring cash into the hotels and restaurants. The sightseers can take in everything and get out of town by nightfall.</p><p>The townsfolk don’t see it this way and local council does not contribute directly to the subsidy of the Royal Shakespeare Company. Stratford cries poor traditionally. Nevertheless every hotel in town seems to be adding a new wing or cocktail lounge. Hilton is building its own hotel there, which you may be sure will be decorated with Hamlet Hamburger Bars, the Lear Lounge, the Banquo Banqueting Room, and so forth, and will be very expensive.</p><p>Anyway, the townsfolk can’t understand why the Royal Shakespeare Company needs a subsidy. (The theatre has broken attendance records for three years in a row. Last year its 1,431 seats were 94 percent occupied all year long and this year they’ll do better.) The reason, of course, is that costs have rocketed and ticket prices have stayed low.</p><p>It would be a shame to raise prices too much because it would drive away the young people who are Stratford’s most attractive clientele. They come entirely for the plays, not the sights. They all seem to look alike (though they come from all over) – lean, pointed, dedicated faces, wearing jeans and sandals, eating their buns and bedding down for the night on the flagstones outside the theatre to buy the 20 seats and 80 standing-room tickets held for the sleepers and sold to them when the box office opens at 10:30 a.m.</p><ol><li>From the first two paragraphs, we learn that <strong><em>__</em></strong>.<br>[A] the townsfolk deny the RSC’s contribution to the town’s revenue<br>[B] the actors of the RSC imitate Shakespeare on and off stage<br>[C] the two branches of the RSC are not on good terms<br>[D] the townsfolk earn little from tourism</li><li>It can be inferred from Paragraph 3 that <strong><em>__</em></strong>.<br>[A] the sightseers cannot visit the Castle and the Palace separately<br>[B] the playgoers spend more money than the sightseers<br>[C] the sightseers do more shopping than the playgoers<br>[D] the playgoers go to no other places in town than the theater</li><li>By saying “Stratford cries poor traditionally” (Line 2-3, Paragraph 4), the author implies that <strong><em>__</em></strong>.<br>[A] Stratford cannot afford the expansion projects<br>[B] Stratford has long been in financial difficulties<br>[C] the town is not really short of money<br>[D] the townsfolk used to be poorly paid</li><li>According to the townsfolk, the RSC deserves no subsidy because <strong><em>__</em></strong>.<br>[A] ticket prices can be raised to cover the spending<br>[B] the company is financially ill-managed<br>[C] the behavior of the actors is not socially acceptable<br>[D] the theatre attendance is on the rise</li><li>From the text we can conclude that the author <strong><em>__</em></strong>.<br>[A] is supportive of both sides [B] favors the townsfolk’s view<br>[C] takes a detached attitude [D] is sympathetic to the RSC</li></ol>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;Americans today don’t place a very high value on intellect. Our heroes are athletes, entertainers, and entrepreneurs, not scholars.
-    
-    </summary>
-    
-    
-      <category term="英语学习" scheme="https://zuobaiquan.github.io/tags/%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2004年英语一 Part A</title>
-    <link href="https://zuobaiquan.github.io/2016/01/02/Z_English2004A/"/>
-    <id>https://zuobaiquan.github.io/2016/01/02/Z_English2004A/</id>
-    <published>2016-01-02T08:01:49.000Z</published>
-    <updated>2017-04-29T12:22:28.483Z</updated>
-    
-    <content type="html"><![CDATA[<p>Hunting for a job late last year, lawyer Gant Redmon stumbled across CareerBuilder, a job database on the Internet. He searched it with no success but was attracted by the site’s “personal search agent”.<a id="more"></a> It’s an interactive feature that lets visitors key in job criteria such as location, title, and salary, then E-mails them when a matching position is posted in the database. Redmon chose the keywords legal, intellectual property, and Washington, D.C. Three weeks later, he got his first notification of an opening. “I struck gold, ’ says Redmon, who E-mailed his resume to the employer and won a position as in-house counsel for a company.</p><p>With thousands of career-related sites on the Internet, finding promising openings can be time-consuming and inefficient. Search agents reduce the need for repeated visits to the databases. But although a search agent worked for Redmon, career experts see drawbacks. Narrowing your criteria, for example, may work against you: “Every time you answer a question you eliminate a possibility.” says one expert.</p><p>For any job search, you should start with a narrow concept – what you think you want to do – then broaden it. “None of these programs do that, ” says another expert. “There’s no career counseling implicit in all of this.” Instead, the best strategy is to use the agent as a kind of tip service to keep abreast of jobs in a particular database; when you get E-mail, consider it a reminder to check the database again. “I would not rely on agents for finding everything that is added to a database that might interest me, ” says the author of a job-searching guide.</p><p>Some sites design their agents to tempt job hunters to return. When CareerSite’s agent sends out messages to those who have signed up for its service, for example, it includes only three potential jobs —— those it considers the best matches. There may be more matches in the database; job hunters will have to visit the site again to find them —— and they do. “On the day after we send our messages, we see a sharp increase in our traffic, ” says Seth Peets, vice president of marketing for CareerSite.</p><p>Even those who aren’t hunting for jobs may find search agents worthwhile. Some use them to keep a close watch on the demand for their line of work or gather information on compensation to arm themselves when negotiating for a raise. Although happily employed, Redmon maintains his agent at CareerBuilder. “You always keep your eyes open, ” he says. Working with a personal search agent means having another set of eyes looking out for you.</p><ol><li><p>How did Redmon find his job?<br>[A] By searching openings in a job database. [B] By posting a matching position in a database.<br>[C] By using a special service of a database. [D] By E-mailing his resume to a database.</p></li><li><p>Which of the following can be a disadvantage of search agents?<br>[A] Lack of counseling. [B] Limited number of visits.<br>[C] Lower efficiency. [D] Fewer successful matches.</p></li><li><p>The expression “tip service” (Line 4, Paragraph 3) most probably means <strong><strong>__</strong></strong>.<br>[A] advisory. [B] compensation. [C] interaction. [D] reminder.</p></li><li><p>Why does CareerSite’s agent offer each job hunter only three job options?<br>[A] To focus on better job matches. [B] To attract more returning visits.<br>[C] To reserve space for more messages. [D] To increase the rate of success.</p></li><li><p>Which of the following is true according to the text?<br>[A] Personal search agents are indispensable to job-hunters.<br>[B] Some sites keep E-mailing job seekers to trace their demands.<br>[C] Personal search agents are also helpful to those already employed.<br>[D] Some agents stop sending information to people once they are employed.</p></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Hunting for a job late last year, lawyer Gant Redmon stumbled across CareerBuilder, a job database on the Internet. He searched it with no success but was attracted by the site’s “personal search agent”.
-    
-    </summary>
-    
-    
-      <category term="英语学习" scheme="https://zuobaiquan.github.io/tags/%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2005年英语一 Part A</title>
-    <link href="https://zuobaiquan.github.io/2016/01/02/Z_English2005A/"/>
-    <id>https://zuobaiquan.github.io/2016/01/02/Z_English2005A/</id>
-    <published>2016-01-02T08:01:49.000Z</published>
-    <updated>2017-04-29T12:34:26.311Z</updated>
-    
-    <content type="html"><![CDATA[<p>Everybody loves a fat pay rise. Yet pleasure at your own can vanish if you learn that a colleague has been given a bigger one. Indeed, if he has a reputation for slacking, you might even be outraged.<a id="more"></a> Such behaviour is regarded as “all too human”, with the underlying assumption that other animals would not be capable of this finely developed sense of grievance. But a study by Sarah Brosnan and Frans de Waal of Emory University in Atlanta, Georgia, which has just been published in Nature, suggests that it all too monkey, as well.</p><p>The researchers studied the behaviour of female brown capuchin monkeys. They look cute. They are good-natured, co-operative creatures, and they share their food tardily. Above all, like their female human counterparts, they tend to pay much closer attention to the value of “goods and services” than males.</p><p>Such characteristics make them perfect candidates for Dr. Brosnan’s and Dr. de Waal’s study. The researchers spent two years teaching their monkeys to exchange tokens for food. Normally, the monkeys were happy enough to exchange pieces of rock for slices of cucumber. However, when two monkeys were placed in separate but adjoining chambers, so that each could observe what the other was getting in return for its rock, their became markedly different.</p><p>In the world of capuchins grapes are luxury goods (and much preferable to cucumbers) So when one monkey was handed a grape in exchange for her token, the second was reluctant to hand hers over for a mere piece of cucumber. And if one received a grape without having to provide her token in exchange at all, the other either tossed her own token at the researcher or out of the chamber, or refused to; accept the slice of cucumber Indeed, the mere presence of a grape in the other chamber (without an actual monkey to eat it) was enough to reduce resentment in a female capuchin.</p><p>The researches suggest that capuchin monkeys, like humans, are guided by social emotions, in the wild, they are a co-operative, groupliving species, Such co-operation is likely to be stable only when each animal feels it is not being cheated. Feelings of righteous indignation, it seems, are not the preserve of people alone, Refusing a lesser reward completely makes these feelings abundantly clear to other members of the group. However, whether such a sense of fairness evolved independently in capuchins and humans, or whether it stems form the common ancestor that the species had 35 million years ago, is, as yet, an unanswered question.</p><ol><li><p>In the opening paragraph, the author introduces his topic by <strong><strong>__</strong></strong>.<br>A. posing a contrast. B. justifying an assumption.<br>C. making a comparison. D. explaining a phenomenon.</p></li><li><p>The statement “it is all too monkey” (Last line, paragraph l) implies that <strong><strong>__</strong></strong>.<br>A. monkeys are also outraged by slack rivals. B. resenting unfairness is also monkeys’ nature.<br>C. monkeys, like humans, tend to be jealous of each other.<br>D. no animals other than monkeys can develop such emotions.</p></li><li><p>Female capuchin monkeys were chosen for the research most probably because they are <em>__</em>.<br>A. more inclined to weigh what they get. B. attentive to researchers’ instructions.<br>C. nice in both appearance and temperament. D. more generous than their male companions</p></li><li><p>Dr. Brosnan and Dr. de Waal have eventually found in their study that the monkeys <strong>___</strong>.<br>A. prefer grapes to cucumbers. B. can be taught to exchange things.<br>C. will not be co-operative if feeling cheated. D. are unhappy when separated from others.</p></li><li><p>What can we infer from the last paragraph?<br>A. Monkeys can be trained to develop social emotions.<br>B. Human indignation evolved from an uncertain source.<br>C. Animals usually show their feelings openly as humans do.<br>D. Cooperation among monkeys remains stable only in the wild.</p></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Everybody loves a fat pay rise. Yet pleasure at your own can vanish if you learn that a colleague has been given a bigger one. Indeed, if he has a reputation for slacking, you might even be outraged.
+      &lt;p&gt;Stratford-on-Avon, as we all know, has only one industry – William Shakespeare – but there are two distinctly separate and increasingly hostile branches.
     
     </summary>
     
