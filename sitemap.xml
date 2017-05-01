@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zuobaiquan.github.io/about/index.html</loc>
+    
+    <lastmod>2017-05-01T08:48:33.216Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://zuobaiquan.github.io/2017/04/30/vue%E7%BB%84%E4%BB%B6--slot%E5%86%85%E5%AE%B9%E5%88%86%E5%8F%91/</loc>
     
     <lastmod>2017-04-30T13:20:52.418Z</lastmod>
@@ -131,13 +138,6 @@
     <loc>https://zuobaiquan.github.io/2016/01/02/Z_English2004B/</loc>
     
     <lastmod>2017-04-29T12:21:36.700Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zuobaiquan.github.io/about/index.html</loc>
-    
-    <lastmod>2017-04-29T08:01:57.073Z</lastmod>
     
   </url>
   
