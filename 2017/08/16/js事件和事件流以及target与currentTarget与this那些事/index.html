@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  
+  <title>js事件和事件流以及target与currentTarget与this那些事 | zuobaiquan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="神马是事件，事件三种写法html事件处理程序、dom0级、dom2级 事件流是什么鬼及其运用和使用上的坑~    target、this、currentTarget的区别">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js事件和事件流以及target与currentTarget与this那些事">
+<meta property="og:url" content="https://zuobaiquan.github.io/2017/08/16/js事件和事件流以及target与currentTarget与this那些事/index.html">
+<meta property="og:site_name" content="zuobaiquan">
+<meta property="og:description" content="神马是事件，事件三种写法html事件处理程序、dom0级、dom2级 事件流是什么鬼及其运用和使用上的坑~    target、this、currentTarget的区别">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://zuobaiquan.github.io/blogImg/JavaScript/2017081601.jpg">
+<meta property="og:image" content="https://zuobaiquan.github.io/blogImg/JavaScript/2017081602.jpg">
+<meta property="og:image" content="https://zuobaiquan.github.io/blogImg/JavaScript/2017081603.jpg">
+<meta property="og:image" content="https://zuobaiquan.github.io/blogImg/JavaScript/2017081604.jpg">
+<meta property="og:updated_time" content="2017-08-16T15:28:42.309Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js事件和事件流以及target与currentTarget与this那些事">
+<meta name="twitter:description" content="神马是事件，事件三种写法html事件处理程序、dom0级、dom2级 事件流是什么鬼及其运用和使用上的坑~    target、this、currentTarget的区别">
+<meta name="twitter:image" content="https://zuobaiquan.github.io/blogImg/JavaScript/2017081601.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="zuobaiquan" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  
+
+</head>
+
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <nav id="upper-nav" class="inner">
+      <a id="main-nav-toggle" class="nav-icon"></a>
+      <div class="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        
+          <a id="nav-github" class="nav-icon" href="https://github.com/zuobaiquan"></a>
+        
+      </div>
+    </nav>
+    <div id="header-title">
+      
+        <h1 id="blog-title-wrap">
+          <a href="/" id="blog-title">热爱前端喜欢分享的程序猿</a>
+        </h1>
+      
+    </div>
+    <div id="contenedor">
+      <ul class="cube">
+        <li class="cara">前端</li>
+        <li class="cara">框架</li>
+        <li class="cara">JS</li>
+        <li class="cara">HTML5</li>
+        <li class="cara">CSS</li>
+        <li class="cara">心得</li>
+      </ul>
+    </div>
+    <nav id="main-nav">
+      
+        <a class="main-nav-link" href="/">首页</a>
+      
+        <a class="main-nav-link" href="/archives">归档</a>
+      
+        <a class="main-nav-link" href="/about">关于</a>
+      
+        <a class="main-nav-link" href="/resume">简历</a>
+      
+	  <a class="main-nav-link" href="https://zuobaiquan.github.io/tags/英语学习">英语学习</a>
+	  <a class="main-nav-link" href="http://weibo.com/zuobaiquan" target= '_blank'>微博</a>
+	  <a class="main-nav-link" href="http://www.jianshu.com/users/b9e115d840f0/timeline" target= '_blank'>简书</a>
+	  <a class="main-nav-link" href="https://www.zhihu.com/people/zuobaiquan" target= '_blank'>知乎</a>
+	  <a class="main-nav-link" href="https://segmentfault.com/u/haokunaaa" target= '_blank'>SegmentFault</a>
+	  <a class="main-nav-link" href="https://github.com/zuobaiquan?tab=repositories" target= '_blank'>Github</a>
+    </nav>
+  </div>
+</header>
+
+    <div class="outer">
+      <section id="main"><article id="post-js事件和事件流以及target与currentTarget与this那些事" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <h3 href="/2017/08/16/js事件和事件流以及target与currentTarget与this那些事/" class="article-date">
+  <time datetime="2017-08-16T15:02:12.000Z" itemprop="datePublished">2017-08-16</time>
+</h3>
+    
+  </div>
+  <div class="article-inner">
+  <div class="curve-down">
+  <div class="fill-content">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js事件和事件流以及target与currentTarget与this那些事
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        <p>神马是事件，事件三种写法html事件处理程序、dom0级、dom2级</p>
+<p>事件流是什么鬼及其运用和使用上的坑~   </p>
+<p>target、this、currentTarget的区别</p>
+<a id="more"></a>
+<h2 id="厉害了我的哥——事件"><a href="#厉害了我的哥——事件" class="headerlink" title="厉害了我的哥——事件"></a>厉害了我的哥——事件</h2><p>  我们先聊聊事件，首先我们必须明确一点，事件通常与<strong>函数</strong>挂钩。要聊事件这个名词，我先扯下js，我们都知道js由<strong>ECMA、DOM、BOM</strong>组成，ECMA为js的基本语法，如果你实在不知道是啥，可以简单的理解为他规定了循环是用for关键字，而采用var来定义一个变量，诸如此类；BOM是浏览器对象模型的缩写，即用我们的js来操作浏览器；DOM是文档对象模型的缩写，那啥子是文档呢？简单可以这样理解——我们的html标签在被浏览器渲染的时候会生成一棵标签树，我们可以把这颗由标签构成的树别名称之为文档树或者文档，而每一个标签在js中都可以被抽成一个对象，so，到此你应该已了然于胸了吧？原来文档对象模型可以简单的理解为<strong>html标签文档在js中的对象映射，也就是有了dom这个概念，我们可以在js中操作html的元素咯</strong>，如图所示：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>当我们在源文件中写下如上的代码，浏览器会解析成如图所示<br><img src="https://zuobaiquan.github.io/blogImg/JavaScript/2017081601.jpg" alt="img"><br>如果把浏览器当作最顶层容器，抽象成文字可以理解为</p>
+<blockquote>
+<p>window-&gt;document-&gt;html-&gt;head/body-&gt;其他元素</p>
+</blockquote>
+<p>这个层级关系就可以理解为文档树了，现在我们可以得出如下几个概念：</p>
+<blockquote>
+<ol>
+<li>凡出现在html中的标签被浏览器解析的时候都会被挂载到dom树上。</li>
+<li>dom树上的每个标签都是一个独立的对象，既然是对象就会有属性和方法，上文也提到过事件通常与方法不离不弃，所以这里我们就会晓得一个基本常识了，事件一般会和标签和方法挂钩，嗯是的！我们通常在标签上注册一个事件，当事件满足条件被触发以后就会执行我们早些预定义好的方法。</li>
+<li>事件的概念就是：让html在某些特定条件下执行了一段js脚本，某些特定的条件就是如单击，双击，鼠标经过等，这些条件以属性的形式呈现在html代码中，而触发执行的js脚本则通常为方法，如代码：</li>
+</ol>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onclick</span> = <span class="string">"fn()"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        alert(<span class="string">"我被单击了"</span>);</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>onclick为某些条件的<strong>事件句柄</strong>，fn为事件满足条件后要执行的函数，以上只是事件的一种写法，不足以应付开发，为此我们还需要了解下<strong>常见事件的几种写法：</strong></p>
+<blockquote>
+<p>这里我们需要了解三种，分别为最原始的html混合事件写法，dom0级写法、dom2级写法：</p>
+</blockquote>
+<ol>
+<li><p>最原始的写法：和html混合在一起写，缺点是代码高冗余，且无法添加多个事件处理函数如上文对事件的举例则为典型的<em>*html事件处理程序</em>写法</p>
+</li>
+<li><p>dom0级：将html代码和js代码分离，且支持匿名函数，可以看到完美的改进了1的冗余缺憾，所有的事件相关操作都在js中完成</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//html代码</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"a"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">//js代码</span><br><span class="line">window.onload=function()&#123;</span><br><span class="line">	var div1 = document.getElementById("a");</span><br><span class="line">	div1.onclick=function()&#123;</span><br><span class="line">		alert("我被单击了");</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>dom2级：ie使用attachEventListener其他非ie使用addEventListener，<strong>可以支持绑定多个事件</strong>，瞧吧，又一个缺憾被完美解决了~，而且dom2级还可以自定义<strong>事件流</strong>，好，到这里大家留个心，这是第二部分我们要介绍的重点。</p>
+</li>
+<li><p>dom3级：对事件进行了更广而全的分类，请大家自行查阅。</p>
+</li>
+</ol>
+<h2 id="厉害了我的哥——事件流"><a href="#厉害了我的哥——事件流" class="headerlink" title="厉害了我的哥——事件流"></a>厉害了我的哥——事件流</h2><p>  接上，事件我们已经晓得是什么鬼了，现在多了个流，组个词人流，水流，流向，额貌似靠近点它的本意了，总有点<strong>排队方向</strong>的感脚，没错，很正确的第n感。事件流官网定义：<strong>描述的是从页面中接收事件的顺序</strong>，那~~~是谁从页面接收事件的顺序呢？接收的顺序有啥子呢？接收的范围呢？<br>  咳咳，回答一下上边的问题呗，谁接收？你说呢？一点头绪还没有的童鞋建议重新看下上文吧，接收的顺序和范围，噗，这是接下来要说道说道的了：</p>
+<blockquote>
+<p>接收顺序（事件流方式），需要我们了解：</p>
+<ol>
+<li>事件捕获：什么叫捕获，其实不用扯那么多一句话<strong>从最不具体的到最具体的</strong></li>
+<li>事件冒泡：什么叫冒泡，正好和上面相反，<strong>从最具体的到最不具体的</strong></li>
+<li>为什么会有两种事件流方式呢？历史原因，ie提出的是事件冒泡，而w3c提出的是事件捕获。</li>
+<li>现代浏览器高级了，那。。。。。嗯，我知道你要问啥，你一定要问浏览器内部是如何解析这两种事件流的，它的执行顺序：事件捕获-》目标阶段-》事件冒泡，<strong>一句话就是先捕获后冒泡</strong></li>
+</ol>
+</blockquote>
+<p>捕获和冒泡的范围呢？也就是接收事件的范围呢？ 哈哈，这个上面其实我已经说过了：</p>
+<blockquote>
+<p>window-&gt;document-&gt;html-&gt;head/body-&gt;div或其他元素<br>注意昂，现在的浏览器都是从window开始滴，不管冒泡还是捕获<strong>其的传递范围一定是父子关系，也就是外层到内层，或者从内层到外层。假设我们给div添加一个事件方法，如果是事件捕获的话是从window开始，因为他是最不具体的元素，如果是冒泡的话则是从div开始，所以这里的</strong>具体不具体是相对于添加事件的元素而言的，<strong>说到这里，大家一定要晓得，我们要使用事件流通常要配合dom2级事件去写，要是读到这里你还不了解这个，那宝宝就让你气死鸟~哦，</strong>还要知道的一点我们现开发中多使用的事件流通常是冒泡，嗯这点随了ie了，但是要注意现在的主流浏览器默认就是冒泡，但通常我们在使用addEventListener这个方法的时候他的第三个参数还是会显示的指定为false，即为不捕获**。</p>
+</blockquote>
+<p>  防着有人不理解，我多解释几句呗，<strong>捕获和冒泡的方式决定着浏览器何时去处理这个事件，如果我把事件声明在冒泡阶段处理，那么在捕获阶段即使捕获到了这个事件，事件也是不会被执行滴，</strong>这就是他的一个重要运用，这点也是经常被大家混淆和忽略的地方，但恰好也是它最好玩的地方。随意给大家从网上找两张万年错且没什么卵用的图，说他错是因为现在的事件范围是从window开始的，结果网上的很多图都是画到了document，如下图：<br><img src="https://zuobaiquan.github.io/blogImg/JavaScript/2017081602.jpg" alt="img">冒泡流程图</p>
+<p><img src="https://zuobaiquan.github.io/blogImg/JavaScript/2017081603.jpg" alt="img">捕获流程图</p>
+<p>事件流使用上最好玩的地方，也正是其最大的坑，大家看如下例子,</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">"one"</span>&gt;</span><br><span class="line">    &lt;div id=<span class="string">"two"</span>&gt;</span><br><span class="line">        &lt;div id=<span class="string">"three"</span>&gt;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">one.addEventListener(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span><span class="params">(e)</span></span>&#123;</span><br><span class="line">    console.<span class="built_in">log</span>(<span class="string">'one'</span>);</span><br><span class="line">&#125;,<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">two.addEventListener(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span><span class="params">(e)</span></span>&#123;</span><br><span class="line">    console.<span class="built_in">log</span>(<span class="string">'two'</span>);</span><br><span class="line">&#125;,<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">three.addEventListener(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span><span class="params">(e)</span></span>&#123;</span><br><span class="line">    console.<span class="built_in">log</span>(<span class="string">'three'</span>);</span><br><span class="line">&#125;,<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<p>使用的是dom2级中的非ie方法，从代码中可以看到one和two为冒泡，three为捕获，所以事件的执行结果就会被改变，我相信很多童鞋若不看小弟这篇软文直接晕菜了吧？但是看到这里的你，一定会有一种say爽的感觉，当我们点击最里面的div的时候，打印数序应该为three-&gt;two-&gt;one。<strong>一句话总结：现代的浏览器对事件的处理方式为先捕获后冒泡，只要有事件就会按这个顺序执行，雷打不动滴，雷打不动滴。dom2级决定的只是只是只是在事件流的哪个时机去执行处理函数而已而已。</strong></p>
+<p>  温故而知新啊~上文说到ie使用attachEventListener其他非ie使用addEventListener，且dom2级可以添加多个事件，我们都知道ie使用的是是冒泡也就是从具体到不具体，而非ie为捕获也就是从不具体到最具体，<strong>当我们要绑定多个事件处理函数的时候，事件处理函数的顺序ie和非ie在默认情况下是不一致的，因为他们两个的事件流默认情况下是正好相反的，这在不指定事件流参数的情况下确实是个坑~</strong></p>
+<h2 id="厉害了我的哥——target、this、currentTarget的区别"><a href="#厉害了我的哥——target、this、currentTarget的区别" class="headerlink" title="厉害了我的哥——target、this、currentTarget的区别"></a>厉害了我的哥——target、this、currentTarget的区别</h2><p>现在终于到了target、this、currentTarget</p>
+<blockquote>
+<p>先诉重点理论：</p>
+<ol>
+<li>target:<strong>触发</strong>事件的某个具体对象，只会出现在事件流的目标阶段（谁触发谁命中，所以肯定是目标阶段）</li>
+<li>currentTarget:<strong>绑定</strong>事件的对象，<strong>恒等于this</strong>，可能出现在事件流的任意一个阶段中</li>
+<li>通常情况下terget和currentTarget是一致的，我们只要使用terget即可，但有一种情况必须区分这三者的关系，那就是在父子嵌套的关系中，父元素绑定了事件，单击了子元素（根据事件流，在不阻止事件流的前提下他会传递至父元素，导致父元素的事件处理函数执行），这时候currentTarget指向的是父元素，因为他是<strong>绑定事件的对象</strong>，而target指向了子元素，因为他是<strong>触发事件的那个具体对象</strong>，如下代码和截图所示：</li>
+</ol>
+</blockquote>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="built-in">div</span> id=<span class="string">"one"</span>&gt;</span><br><span class="line">   &lt;<span class="built-in">div</span> id=<span class="string">"three"</span>&gt;&lt;/<span class="built-in">div</span>&gt;</span><br><span class="line">&lt;/<span class="built-in">div</span>&gt;</span><br><span class="line"></span><br><span class="line">one.addEventListener(<span class="string">'click'</span>,function(e)&#123;</span><br><span class="line">    console.<span class="built-in">log</span>(e.target);  <span class="comment">//three</span></span><br><span class="line">    console.<span class="built-in">log</span>(e.currentTarget);  <span class="comment">//one</span></span><br><span class="line">&#125;,false);</span><br></pre></td></tr></table></figure>
+<p><img src="https://zuobaiquan.github.io/blogImg/JavaScript/2017081604.jpg" alt="img"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-content">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+
+        <a data-url="https://zuobaiquan.github.io/2017/08/16/js事件和事件流以及target与currentTarget与this那些事/" data-id="cjd1nyogx001nd59o4ggzdoqf" class="article-share-link">分享到</a>
+        
+      </div>
+    </footer>
+  </div>
+  </div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/08/22/js日期格式转换的几种方法探讨/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          js日期格式转换的几种方法探讨
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/08/01/初探es6语法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">初探es6语法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/07/vue路由原理剖析/">vue路由原理剖析</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/01/回顾2017，展望2018/">回顾2017，展望2018</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/30/CSS制作小米logo图片/">CSS制作小米logo图片</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/22/js日期格式转换的几种方法探讨/">js日期格式转换的几种方法探讨</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/16/js事件和事件流以及target与currentTarget与this那些事/">js事件和事件流以及target与currentTarget与this那些事</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AngularJS/">AngularJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/程序人生/">程序人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://www.zhangxinxu.com/" target="_blank">张鑫旭</a>
+          </li>
+        
+          <li>
+            <a href="http://zhangwenli.com/" target="_blank">张雯丽</a>
+          </li>
+        
+          <li>
+            <a href="http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000" target="_blank">廖雪峰</a>
+          </li>
+        
+          <li>
+            <a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank">阮一峰</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer" style="padding: 20px 0 0px;">
+  
+  <div class="outer" style="height:50px;overflow:hidden;">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zuobaiquan<br>
+      <a style="color: #888;" href="https://zuobaiquan.github.io/" target="_blank">欢迎访问我的博客哦</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+    <a href="/resume" class="mobile-nav-link">简历</a>
+  
+</nav>
+  
+
+<!-- totop start -->
+<div id="totop">
+	<a title="返回顶部"></a>
+</div>
+<!-- totop end -->
+
+<!-- swiftype search start -->
+
+<!-- swiftype search end -->
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/lrsjng.jquery-qrcode/0.12.0/jquery.qrcode.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

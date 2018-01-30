@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  
+  <title>黑盒测试白盒测试和灰盒测试的基本概念 | zuobaiquan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. 黑盒测试  黑盒测试也称功能测试或数据驱动测试，它是在已知产品所应具有的功能，通过测试来检测每个功能是否都能正常使用，在测试时，把程序看作一个不能打开的黑盆子，在完全不考虑程序内部结构和内部特性的情况下，测试者在程序接口进行测试，它只检查程序功能是否按照需求规格说明书的规定正常使用，程序是否能适当地接收输入数锯而产生正确的输出信息，并且保持外部信息（如数据库或文件）的完整性。​     黑盒">
+<meta name="keywords" content="软件测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="黑盒测试白盒测试和灰盒测试的基本概念">
+<meta property="og:url" content="https://zuobaiquan.github.io/2017/02/02/黑盒测试白盒测试和灰盒测试的基本概念/index.html">
+<meta property="og:site_name" content="zuobaiquan">
+<meta property="og:description" content="1. 黑盒测试  黑盒测试也称功能测试或数据驱动测试，它是在已知产品所应具有的功能，通过测试来检测每个功能是否都能正常使用，在测试时，把程序看作一个不能打开的黑盆子，在完全不考虑程序内部结构和内部特性的情况下，测试者在程序接口进行测试，它只检查程序功能是否按照需求规格说明书的规定正常使用，程序是否能适当地接收输入数锯而产生正确的输出信息，并且保持外部信息（如数据库或文件）的完整性。​     黑盒">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-09-28T07:16:29.602Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="黑盒测试白盒测试和灰盒测试的基本概念">
+<meta name="twitter:description" content="1. 黑盒测试  黑盒测试也称功能测试或数据驱动测试，它是在已知产品所应具有的功能，通过测试来检测每个功能是否都能正常使用，在测试时，把程序看作一个不能打开的黑盆子，在完全不考虑程序内部结构和内部特性的情况下，测试者在程序接口进行测试，它只检查程序功能是否按照需求规格说明书的规定正常使用，程序是否能适当地接收输入数锯而产生正确的输出信息，并且保持外部信息（如数据库或文件）的完整性。​     黑盒">
+  
+    <link rel="alternative" href="/atom.xml" title="zuobaiquan" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  
+
+</head>
+
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <nav id="upper-nav" class="inner">
+      <a id="main-nav-toggle" class="nav-icon"></a>
+      <div class="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        
+          <a id="nav-github" class="nav-icon" href="https://github.com/zuobaiquan"></a>
+        
+      </div>
+    </nav>
+    <div id="header-title">
+      
+        <h1 id="blog-title-wrap">
+          <a href="/" id="blog-title">热爱前端喜欢分享的程序猿</a>
+        </h1>
+      
+    </div>
+    <div id="contenedor">
+      <ul class="cube">
+        <li class="cara">前端</li>
+        <li class="cara">框架</li>
+        <li class="cara">JS</li>
+        <li class="cara">HTML5</li>
+        <li class="cara">CSS</li>
+        <li class="cara">心得</li>
+      </ul>
+    </div>
+    <nav id="main-nav">
+      
+        <a class="main-nav-link" href="/">首页</a>
+      
+        <a class="main-nav-link" href="/archives">归档</a>
+      
+        <a class="main-nav-link" href="/about">关于</a>
+      
+        <a class="main-nav-link" href="/resume">简历</a>
+      
+	  <a class="main-nav-link" href="https://zuobaiquan.github.io/tags/英语学习">英语学习</a>
+	  <a class="main-nav-link" href="http://weibo.com/zuobaiquan" target= '_blank'>微博</a>
+	  <a class="main-nav-link" href="http://www.jianshu.com/users/b9e115d840f0/timeline" target= '_blank'>简书</a>
+	  <a class="main-nav-link" href="https://www.zhihu.com/people/zuobaiquan" target= '_blank'>知乎</a>
+	  <a class="main-nav-link" href="https://segmentfault.com/u/haokunaaa" target= '_blank'>SegmentFault</a>
+	  <a class="main-nav-link" href="https://github.com/zuobaiquan?tab=repositories" target= '_blank'>Github</a>
+    </nav>
+  </div>
+</header>
+
+    <div class="outer">
+      <section id="main"><article id="post-黑盒测试白盒测试和灰盒测试的基本概念" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <h3 href="/2017/02/02/黑盒测试白盒测试和灰盒测试的基本概念/" class="article-date">
+  <time datetime="2017-02-02T02:36:10.000Z" itemprop="datePublished">2017-02-02</time>
+</h3>
+    
+  </div>
+  <div class="article-inner">
+  <div class="curve-down">
+  <div class="fill-content">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      黑盒测试白盒测试和灰盒测试的基本概念
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        <h3 id="1-黑盒测试"><a href="#1-黑盒测试" class="headerlink" title="1. 黑盒测试"></a><strong>1. 黑盒测试</strong></h3><p>  黑盒测试也称功能测试或数据驱动测试，它是在已知产品所应具有的功能，通过测试来检测每个功能是否都能正常使用，在测试时，把程序看作一个不能打开的黑盆子，在完全不考虑程序内部结构和内部特性的情况下，测试者在程序接口进行测试，它只检查程序功能是否按照需求规格说明书的规定正常使用，程序是否能适当地接收输入数锯而产生正确的输出信息，并且保持外部信息（如<a href="http://lib.csdn.net/base/mysql" target="_blank" rel="noopener">数据库</a>或文件）的完整性。<br>​     黑盒测试方法主要有等价类划分、边值分析、因—果图、错误推测等，主要用于软件确认测试。“黑盒”法着眼于程序外部结构、不考虑内部逻辑结构、针对软件界面和软件功能进行测试。“黑盒”法是穷举输入测试，只有把所有可能的输入都作为测试情况使用，才能以这种方法查出程序中所有的错误。实际上测试情况有无穷多个，人们不仅要测试所有合法的输入，而且还要对那些不合法但是可能的输入进行测试。<a id="more"></a></p>
+<h3 id="2-白盒测试"><a href="#2-白盒测试" class="headerlink" title="2. 白盒测试"></a><strong>2. 白盒测试</strong></h3><p>　　白盒测试也称结构测试或逻辑驱动测试，它是知道产品内部工作过程，可通过测试来检测产品内部动作是否按照规格说明书的规定正常进行，按照程序内部的结构测试程序，检验程序中的每条通路是否都有能按预定要求正确工作，而不顾它的功能，白盒测试的主要方法有逻辑驱动、基路测试等，主要用于软件验证。<br>　　“白盒”法全面了解程序内部逻辑结构、对所有逻辑路径进行测试。“白盒”法是穷举路径测试。在使用这一方案时，测试者必须检查程序的内部结构，从检查程序的逻辑着手，得出测试数据。贯穿程序的独立路径数是天文数字。但即使每条路径都测试了仍然可能有错误。第一，穷举路径测试决不能查出程序违反了设计规范，即程序本身是个错误的程序。第二，穷举路径测试不可能查出程序中因遗漏路径而出错。第三，穷举路径测试可能发现不了一些与数据相关的错误。</p>
+<h3 id="3-灰盒测试"><a href="#3-灰盒测试" class="headerlink" title="3. 灰盒测试"></a><strong>3. 灰盒测试</strong></h3><p>​     灰盒测试，确实是介于二者之间的，可以这样理解，灰盒测试关注输出对于输入的正确性，同时也关注内部表现，但这种关注不象白盒那样详细、完整，只是通过一些表征性的现象、事件、标志来判断内部的运行状态，有时候输出是正确的，但内部其实已经错误了，这种情况非常多，如果每次都通过白盒测试来操作，效率会很低，因此需要采取这样的一种灰盒的方法。<br>灰盒测试结合了白盒测试盒黑盒测试的要素.它考虑了用户端、特定的系统知识和操作环境。它在系统组件的协同性环境中评价应用软件的设计。<br>   灰盒测试由方法和工具组成，这些方法和工具取材于应用程序的内部知识盒与之交互的环境，能够用于黑盒测试以增强测试效率、错误发现和错误分析的效率。<br>​      灰盒测试涉及输入和输出，但使用关于代码和程序操作等通常在测试人员视野之外的信息设计测试。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-content">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件测试/">软件测试</a></li></ul>
+
+        <a data-url="https://zuobaiquan.github.io/2017/02/02/黑盒测试白盒测试和灰盒测试的基本概念/" data-id="cjd1nyohy002od59o4e8fhdk6" class="article-share-link">分享到</a>
+        
+      </div>
+    </footer>
+  </div>
+  </div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/02/软件开发模式对比_瀑布迭代螺旋敏捷/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          软件开发模式对比_瀑布迭代螺旋敏捷
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/11/如何减少UI设计师产品与前端工程师的沟通成本/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">如何减少UI设计师产品与前端工程师的沟通成本</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/07/vue路由原理剖析/">vue路由原理剖析</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/01/回顾2017，展望2018/">回顾2017，展望2018</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/30/CSS制作小米logo图片/">CSS制作小米logo图片</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/22/js日期格式转换的几种方法探讨/">js日期格式转换的几种方法探讨</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/16/js事件和事件流以及target与currentTarget与this那些事/">js事件和事件流以及target与currentTarget与this那些事</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AngularJS/">AngularJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/程序人生/">程序人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://www.zhangxinxu.com/" target="_blank">张鑫旭</a>
+          </li>
+        
+          <li>
+            <a href="http://zhangwenli.com/" target="_blank">张雯丽</a>
+          </li>
+        
+          <li>
+            <a href="http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000" target="_blank">廖雪峰</a>
+          </li>
+        
+          <li>
+            <a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank">阮一峰</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer" style="padding: 20px 0 0px;">
+  
+  <div class="outer" style="height:50px;overflow:hidden;">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zuobaiquan<br>
+      <a style="color: #888;" href="https://zuobaiquan.github.io/" target="_blank">欢迎访问我的博客哦</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+    <a href="/resume" class="mobile-nav-link">简历</a>
+  
+</nav>
+  
+
+<!-- totop start -->
+<div id="totop">
+	<a title="返回顶部"></a>
+</div>
+<!-- totop end -->
+
+<!-- swiftype search start -->
+
+<!-- swiftype search end -->
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/lrsjng.jquery-qrcode/0.12.0/jquery.qrcode.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

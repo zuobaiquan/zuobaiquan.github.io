@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  
+  <title>Vue中的计算属性与$watch | zuobaiquan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="计算属性：在模板中绑定表达式是非常便利的，但是他们实际上只用于简单的操作。模板是为了描述视图的结构。在模板中放入太多的逻辑会让模板过重且难以维护。">
+<meta name="keywords" content="Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue中的计算属性与$watch">
+<meta property="og:url" content="https://zuobaiquan.github.io/2017/04/29/vue中的计算属性与$watch/index.html">
+<meta property="og:site_name" content="zuobaiquan">
+<meta property="og:description" content="计算属性：在模板中绑定表达式是非常便利的，但是他们实际上只用于简单的操作。模板是为了描述视图的结构。在模板中放入太多的逻辑会让模板过重且难以维护。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-04-29T15:38:02.482Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue中的计算属性与$watch">
+<meta name="twitter:description" content="计算属性：在模板中绑定表达式是非常便利的，但是他们实际上只用于简单的操作。模板是为了描述视图的结构。在模板中放入太多的逻辑会让模板过重且难以维护。">
+  
+    <link rel="alternative" href="/atom.xml" title="zuobaiquan" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  
+
+</head>
+
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <nav id="upper-nav" class="inner">
+      <a id="main-nav-toggle" class="nav-icon"></a>
+      <div class="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        
+          <a id="nav-github" class="nav-icon" href="https://github.com/zuobaiquan"></a>
+        
+      </div>
+    </nav>
+    <div id="header-title">
+      
+        <h1 id="blog-title-wrap">
+          <a href="/" id="blog-title">热爱前端喜欢分享的程序猿</a>
+        </h1>
+      
+    </div>
+    <div id="contenedor">
+      <ul class="cube">
+        <li class="cara">前端</li>
+        <li class="cara">框架</li>
+        <li class="cara">JS</li>
+        <li class="cara">HTML5</li>
+        <li class="cara">CSS</li>
+        <li class="cara">心得</li>
+      </ul>
+    </div>
+    <nav id="main-nav">
+      
+        <a class="main-nav-link" href="/">首页</a>
+      
+        <a class="main-nav-link" href="/archives">归档</a>
+      
+        <a class="main-nav-link" href="/about">关于</a>
+      
+        <a class="main-nav-link" href="/resume">简历</a>
+      
+	  <a class="main-nav-link" href="https://zuobaiquan.github.io/tags/英语学习">英语学习</a>
+	  <a class="main-nav-link" href="http://weibo.com/zuobaiquan" target= '_blank'>微博</a>
+	  <a class="main-nav-link" href="http://www.jianshu.com/users/b9e115d840f0/timeline" target= '_blank'>简书</a>
+	  <a class="main-nav-link" href="https://www.zhihu.com/people/zuobaiquan" target= '_blank'>知乎</a>
+	  <a class="main-nav-link" href="https://segmentfault.com/u/haokunaaa" target= '_blank'>SegmentFault</a>
+	  <a class="main-nav-link" href="https://github.com/zuobaiquan?tab=repositories" target= '_blank'>Github</a>
+    </nav>
+  </div>
+</header>
+
+    <div class="outer">
+      <section id="main"><article id="post-vue中的计算属性与$watch" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <h3 href="/2017/04/29/vue中的计算属性与$watch/" class="article-date">
+  <time datetime="2017-04-29T15:11:49.000Z" itemprop="datePublished">2017-04-29</time>
+</h3>
+    
+  </div>
+  <div class="article-inner">
+  <div class="curve-down">
+  <div class="fill-content">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Vue中的计算属性与$watch
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        <p>计算属性：在模板中绑定表达式是非常便利的，但是他们实际上只用于简单的操作。模板是为了描述视图的结构。在模板中放入太多的逻辑会让模板过重且难以维护。<a id="more"></a>这就是为什么vue.js将绑定表达式限制为一个表达式。如果需要多于一个表达式的逻辑，应当使用计算属性。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">    a=&#123;&#123;a&#125;&#125;,b=&#123;&#123;b&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  data:&#123;</span><br><span class="line">    a:<span class="number">1</span></span><br><span class="line">  &#125;,</span><br><span class="line">  computed:&#123;</span><br><span class="line">    b:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.a + <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;).$mount(<span class="string">"#box"</span>);</span><br></pre></td></tr></table></figure>
+<p>这里我们声明了一个计算属性b。我们提供的函数将用作属性vm.b的getter</p>
+<p>你可以打开浏览器的控制台，修改 vm。vm.b 的值始终取决于 vm.a 的值。</p>
+<p>你可以像绑定普通属性一样在模板中绑定计算属性。Vue 知道  vm.b 依赖于vm.a，因此当vm.a 发生改变时，依赖于 vm.b 的绑定也会更新。而且最妙的是我们是声明式地创建这种依赖关系：计算属性的 getter 是干净无副作用的，因此也是易于<a href="http://lib.csdn.net/base/softwaretest" target="_blank" rel="noopener">测试</a>和理解的。</p>
+<h3 id="计算属性-vs-watch"><a href="#计算属性-vs-watch" class="headerlink" title="计算属性 vs. $watch"></a>计算属性 vs. $watch</h3><p>计算属性 vs. $watch</p>
+<h3 id="计算属性-vs-watch-1"><a href="#计算属性-vs-watch-1" class="headerlink" title="计算属性 vs. $watch"></a>计算属性 vs. $watch</h3><p>Vue.js 提供了一个方法 <code>$watch</code>，它用于观察 Vue 实例上的数据变动。当一些数据需要根据其它数据变化时， <code>$watch</code> 很诱人 —— 特别是如果你来自 Angularjs。不过，通常更好的办法是使用计算属性而不是一个命令式的 <code>$watch</code> 回调。考虑下面例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">    &#123;&#123;fullName&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> vm=<span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el:<span class="string">"#box"</span>,</span><br><span class="line">  data:&#123;</span><br><span class="line">    firstName: <span class="string">'Foo'</span>,</span><br><span class="line">    lastName: <span class="string">'Bar'</span>,</span><br><span class="line">    fullName: <span class="string">'Foo Bar'</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//使用$watch</span></span><br><span class="line">vm.$watch(<span class="string">'firstName'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">val</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.fullName = val + <span class="string">' '</span> + <span class="keyword">this</span>.lastName</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">vm.$watch(<span class="string">'lastName'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">val</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.fullName = <span class="keyword">this</span>.firstName + <span class="string">' '</span> + val</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上面代码是命令式的重复的。跟计算属性对比：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">'#demo'</span>,</span><br><span class="line">  data: &#123;</span><br><span class="line">    firstName: <span class="string">'Foo'</span>,</span><br><span class="line">    lastName: <span class="string">'Bar'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  computed: &#123;</span><br><span class="line">    fullName: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.firstName + <span class="string">' '</span> + <span class="keyword">this</span>.lastName</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这样更好，不是吗？</p>
+<h3 id="计算-setter"><a href="#计算-setter" class="headerlink" title="计算 setter"></a>计算 setter</h3><p>计算属性默认只是 getter，不过在需要时你也可以提供一个 setter：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">computed: &#123;</span><br><span class="line">  fullName: &#123;</span><br><span class="line">    <span class="comment">// getter</span></span><br><span class="line">    get: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.firstName + <span class="string">' '</span> + <span class="keyword">this</span>.lastName</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// setter</span></span><br><span class="line">    set: <span class="function"><span class="keyword">function</span> (<span class="params">newValue</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> names = newValue.split(<span class="string">' '</span>)</span><br><span class="line">      <span class="keyword">this</span>.firstName = names[<span class="number">0</span>]</span><br><span class="line">      <span class="keyword">this</span>.lastName = names[names.length - <span class="number">1</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p>现在在调用 vm.fullName = ‘John Doe’ 时，setter 会被调用，vm.firstName 和vm.lastName 也会有相应更新。</p>
+<p>关于计算属性背后的原理和技术细节详见<a href="http://cn.vuejs.org/guide/reactivity.html#计算属性的奥秘" target="_blank" rel="noopener">计算属性的奥秘</a>。</p>
+<p>总结 ：</p>
+<p>计算属性：用于简单场合，比如计算，合并字符串等；    </p>
+<p>watch属性：用于耗时的，可以异步的获取远程服务上的数据这样的操作。</p>
+<p>参考资料：</p>
+<p><a href="http://cn.vuejs.org/v2/guide/reactivity.html#main" target="_blank" rel="noopener">http://cn.vuejs.org/v2/guide/reactivity.html#main</a></p>
+<p><a href="http://cn.vuejs.org/v2/guide/computed.html" target="_blank" rel="noopener">http://cn.vuejs.org/v2/guide/computed.html</a></p>
+<p><a href="https://github.com/zuobaiquan/Vue/tree/master/01vue%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86" target="_blank" rel="noopener">https://github.com/zuobaiquan/Vue/tree/master/01vue%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-content">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+        <a data-url="https://zuobaiquan.github.io/2017/04/29/vue中的计算属性与$watch/" data-id="cjd1nyohe0025d59osdf2l35f" class="article-share-link">分享到</a>
+        
+      </div>
+    </footer>
+  </div>
+  </div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/04/30/vue组件--slot内容分发/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          Vue组件--slot内容分发
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/01/CSS之FLex布局介绍/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">CSS之FLex布局介绍</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/07/vue路由原理剖析/">vue路由原理剖析</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/01/回顾2017，展望2018/">回顾2017，展望2018</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/30/CSS制作小米logo图片/">CSS制作小米logo图片</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/22/js日期格式转换的几种方法探讨/">js日期格式转换的几种方法探讨</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/16/js事件和事件流以及target与currentTarget与this那些事/">js事件和事件流以及target与currentTarget与this那些事</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AngularJS/">AngularJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/">html</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/程序人生/">程序人生</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件测试/">软件测试</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://www.zhangxinxu.com/" target="_blank">张鑫旭</a>
+          </li>
+        
+          <li>
+            <a href="http://zhangwenli.com/" target="_blank">张雯丽</a>
+          </li>
+        
+          <li>
+            <a href="http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000" target="_blank">廖雪峰</a>
+          </li>
+        
+          <li>
+            <a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank">阮一峰</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer" style="padding: 20px 0 0px;">
+  
+  <div class="outer" style="height:50px;overflow:hidden;">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zuobaiquan<br>
+      <a style="color: #888;" href="https://zuobaiquan.github.io/" target="_blank">欢迎访问我的博客哦</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+    <a href="/resume" class="mobile-nav-link">简历</a>
+  
+</nav>
+  
+
+<!-- totop start -->
+<div id="totop">
+	<a title="返回顶部"></a>
+</div>
+<!-- totop end -->
+
+<!-- swiftype search start -->
+
+<!-- swiftype search end -->
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/lrsjng.jquery-qrcode/0.12.0/jquery.qrcode.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
