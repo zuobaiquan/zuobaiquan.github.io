@@ -15,10 +15,13 @@
 <meta property="og:site_name" content="zuobaiquan">
 <meta property="og:description" content="先看看一个简单的代码 12var str=&apos;Hello World&apos;;alert(str);//弹出 Hello World">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-28T07:15:55.461Z">
+<meta property="og:image" content="https://zuobaiquan.github.io/blogImg/CSS/591517660778_.pic.jpg">
+<meta property="og:image" content="https://zuobaiquan.github.io/blogImg/CSS/601517660794_.pic.jpg">
+<meta property="og:updated_time" content="2018-02-03T13:10:26.953Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js中的变量提升与函数提升">
 <meta name="twitter:description" content="先看看一个简单的代码 12var str=&apos;Hello World&apos;;alert(str);//弹出 Hello World">
+<meta name="twitter:image" content="https://zuobaiquan.github.io/blogImg/CSS/591517660778_.pic.jpg">
   
     <link rel="alternative" href="/atom.xml" title="zuobaiquan" type="application/atom+xml">
   
@@ -149,6 +152,8 @@
 <h4 id="3-3-变量的作用域是声明时决定的，而不是运行时。"><a href="#3-3-变量的作用域是声明时决定的，而不是运行时。" class="headerlink" title="3.3 变量的作用域是声明时决定的，而不是运行时。"></a>3.3 变量的作用域是声明时决定的，而不是运行时。</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//变量的作用域是声明时决定的，而不是运行时</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//全局变量，可以同时给f1和f2访问</span></span><br><span class="line"><span class="keyword">var</span> week=<span class="string">"Sunday"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"星期："</span>+week);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//局部变量，只能给f2本身子级访问</span></span><br><span class="line">	<span class="keyword">var</span> week=<span class="string">"Monday"</span>;</span><br><span class="line">	f1();<span class="comment">//该f1无论在任何地方访问，都只能访问到Sunday的信息</span></span><br><span class="line">&#125;</span><br><span class="line">f2();<span class="comment">//星期：Sunday</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//变量的作用域是声明时决定的，而不是运行时</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//全局变量，可以同时给f1和f2访问</span></span><br><span class="line"><span class="keyword">var</span> week=<span class="string">"Sunday"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"星期："</span>+week);</span><br><span class="line">&#125;</span><br><span class="line">week=<span class="string">"Monday"</span>;</span><br><span class="line">f1();<span class="comment">//星期：Monday</span></span><br></pre></td></tr></table></figure>
 <h4 id="3-4-执行环境可以访问变量的类型和优先级"><a href="#3-4-执行环境可以访问变量的类型和优先级" class="headerlink" title="3.4 执行环境可以访问变量的类型和优先级"></a>3.4 执行环境可以访问变量的类型和优先级</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//执行环境可以访问变量的类型和优先级</span></span><br><span class="line"><span class="comment">//形参&lt;外部变量   //形参优先级高</span></span><br><span class="line"><span class="keyword">var</span> week=<span class="string">"Sunday"</span>;<span class="comment">//外部变量</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params">week</span>)</span>&#123;<span class="comment">//形参</span></span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">"星期："</span>+week);</span><br><span class="line">	&#125;</span><br><span class="line">	f2(<span class="string">"Monday"</span>);</span><br><span class="line">&#125;</span><br><span class="line">f1();<span class="comment">//星期：Monday</span></span><br></pre></td></tr></table></figure>
+<p>如果 觉得文章不错，可以请博主喝一杯奶茶哦！！！</p>
+<p><img src="https://zuobaiquan.github.io/blogImg/CSS/591517660778_.pic.jpg" alt="https://zuobaiquan.github.io/blogImg/CSS/591517660778_.pic.jpg"><img src="https://zuobaiquan.github.io/blogImg/CSS/601517660794_.pic.jpg" alt="https://zuobaiquan.github.io/blogImg/CSS/601517660794_.pic.jpg"></p>
 
       
     </div>
@@ -157,7 +162,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
 
-        <a data-url="https://zuobaiquan.github.io/2017/05/16/js中的变量提升与函数提升/" data-id="cjd1nyogw001ld59oq3t3afo2" class="article-share-link">分享到</a>
+        <a data-url="https://zuobaiquan.github.io/2017/05/16/js中的变量提升与函数提升/" data-id="cjd7dqm7j001imi9oen8900ah" class="article-share-link">分享到</a>
         
       </div>
     </footer>

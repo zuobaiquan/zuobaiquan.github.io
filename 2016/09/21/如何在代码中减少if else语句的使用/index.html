@@ -15,10 +15,13 @@
 <meta property="og:site_name" content="zuobaiquan">
 <meta property="og:description" content="前言代码中嵌套的if/else结构往往导致代码不美观，也不易于理解。面向过程的开发中代码有大量的if else，在java中可以用一些设计模式替换掉这些逻辑，那么在js中是否也有类似的方法用来尽可能减少代码中的if/else嵌套呢？">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-04-09T07:46:42.960Z">
+<meta property="og:image" content="https://zuobaiquan.github.io/blogImg/CSS/591517660778_.pic.jpg">
+<meta property="og:image" content="https://zuobaiquan.github.io/blogImg/CSS/601517660794_.pic.jpg">
+<meta property="og:updated_time" content="2018-02-03T12:59:10.163Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在代码中减少if else语句的使用">
 <meta name="twitter:description" content="前言代码中嵌套的if/else结构往往导致代码不美观，也不易于理解。面向过程的开发中代码有大量的if else，在java中可以用一些设计模式替换掉这些逻辑，那么在js中是否也有类似的方法用来尽可能减少代码中的if/else嵌套呢？">
+<meta name="twitter:image" content="https://zuobaiquan.github.io/blogImg/CSS/591517660778_.pic.jpg">
   
     <link rel="alternative" href="/atom.xml" title="zuobaiquan" type="application/atom+xml">
   
@@ -151,8 +154,8 @@
 <p> 可以重构一下，改成 OO。</p>
 <blockquote>
 <p> <em>定义类： 动物（或者接口）
-</em>定义方法：叫<br><em>定义子类：狗、猫、羊、鸭
-</em>重写方法 —- 叫</p>
+ </em>定义方法：叫<br> <em>定义子类：狗、猫、羊、鸭
+ </em>重写方法 —- 叫</p>
 </blockquote>
 <p>也就是说将同的判断按照功能，写成函数，这样也便于阅读<br>比如我有一个方法根据类型获取名称，用if else会这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function getName(type) &#123;</span><br><span class="line">    if (type === &apos;monkey&apos;) &#123;</span><br><span class="line">        return &apos;monkey name&apos;;</span><br><span class="line">    &#125; else if (type === &apos;cat&apos;) &#123;</span><br><span class="line">        return &apos;cat name&apos;;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return &apos;dog name&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>如果写成函数，改成下面的会更好<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function getName(type) &#123;</span><br><span class="line">    var data = &#123;</span><br><span class="line">        monkey: &apos;monkey name&apos;,</span><br><span class="line">        cat: &apos;cat name&apos;,</span><br><span class="line">        dog: &apos;dog name&apos;</span><br><span class="line">    &#125;</span><br><span class="line">    return data[type] ? data[type] : data[&apos;dog&apos;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -161,6 +164,8 @@
 <p>保持着这个心态写代码，写出的东西离设计模式也不会差太多了。</p>
 <p>多说一句：存在必有其价值，不能说if else多了就不好，凡事无绝对，适合A的未必就适合B，每个东西都有其实现的场景。同理改写设计模式未必就是最棒的，听起来高大上点而已。</p>
 <p>来源：<a href="http://www.xuanfengge.com/how-to-reduce-the-use-of-if-else-statements.html" target="_blank" rel="noopener">http://www.xuanfengge.com/how-to-reduce-the-use-of-if-else-statements.html</a></p>
+<p>如果 觉得文章不错，可以请博主喝一杯奶茶哦！！！</p>
+<p><img src="https://zuobaiquan.github.io/blogImg/CSS/591517660778_.pic.jpg" alt="https://zuobaiquan.github.io/blogImg/CSS/591517660778_.pic.jpg"><img src="https://zuobaiquan.github.io/blogImg/CSS/601517660794_.pic.jpg" alt="https://zuobaiquan.github.io/blogImg/CSS/601517660794_.pic.jpg"></p>
 
       
     </div>
@@ -169,7 +174,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
 
-        <a data-url="https://zuobaiquan.github.io/2016/09/21/如何在代码中减少if else语句的使用/" data-id="cjd1nyohs002jd59orcgal761" class="article-share-link">分享到</a>
+        <a data-url="https://zuobaiquan.github.io/2016/09/21/如何在代码中减少if else语句的使用/" data-id="cjd7dqm84002rmi9odhsdh5kr" class="article-share-link">分享到</a>
         
       </div>
     </footer>

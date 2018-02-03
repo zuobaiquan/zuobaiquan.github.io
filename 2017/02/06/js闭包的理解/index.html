@@ -15,10 +15,13 @@
 <meta property="og:site_name" content="zuobaiquan">
 <meta property="og:description" content="1.变量的作用域要理解闭包，首先必须理解Javascript特殊的变量作用域。 变量的作用域无非就是两种：全局变量和局部变量。 Javascript语言的特殊之处，就在于函数内部可以直接读取全局变量。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-05-22T00:16:07.581Z">
+<meta property="og:image" content="https://zuobaiquan.github.io/blogImg/CSS/591517660778_.pic.jpg">
+<meta property="og:image" content="https://zuobaiquan.github.io/blogImg/CSS/601517660794_.pic.jpg">
+<meta property="og:updated_time" content="2018-02-03T13:08:55.502Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS闭包的理解">
 <meta name="twitter:description" content="1.变量的作用域要理解闭包，首先必须理解Javascript特殊的变量作用域。 变量的作用域无非就是两种：全局变量和局部变量。 Javascript语言的特殊之处，就在于函数内部可以直接读取全局变量。">
+<meta name="twitter:image" content="https://zuobaiquan.github.io/blogImg/CSS/591517660778_.pic.jpg">
   
     <link rel="alternative" href="/atom.xml" title="zuobaiquan" type="application/atom+xml">
   
@@ -146,6 +149,9 @@
 <p>上面的代码是错误的.innerFun()的作用域在outerFun()内部,所在outerFun()外部调用它是错误的.</p>
 <p>改成如下,也就是闭包:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">outerFun</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">var</span> a=<span class="number">0</span>;</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">innerFun</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      a++;</span><br><span class="line">      alert(a);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> innerFun;  <span class="comment">//注意这里</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj=outerFun();</span><br><span class="line">obj();  <span class="comment">//结果为1</span></span><br><span class="line">obj();  <span class="comment">//结果为2</span></span><br><span class="line"><span class="keyword">var</span> obj2=outerFun();</span><br><span class="line">obj2();  <span class="comment">//结果为1</span></span><br><span class="line">obj2();  <span class="comment">//结果为2</span></span><br></pre></td></tr></table></figure>
+<p>如果 觉得文章不错，可以请博主喝一杯奶茶哦！！！</p>
+<p><img src="https://zuobaiquan.github.io/blogImg/CSS/591517660778_.pic.jpg" alt="https://zuobaiquan.github.io/blogImg/CSS/591517660778_.pic.jpg"><img src="https://zuobaiquan.github.io/blogImg/CSS/601517660794_.pic.jpg" alt="https://zuobaiquan.github.io/blogImg/CSS/601517660794_.pic.jpg"></p>
+
       
     </div>
     <footer class="article-footer">
@@ -153,7 +159,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
 
-        <a data-url="https://zuobaiquan.github.io/2017/02/06/js闭包的理解/" data-id="cjd1nyoh7001xd59oipsdti10" class="article-share-link">分享到</a>
+        <a data-url="https://zuobaiquan.github.io/2017/02/06/js闭包的理解/" data-id="cjd7dqm7s001wmi9ol2q492ir" class="article-share-link">分享到</a>
         
       </div>
     </footer>
