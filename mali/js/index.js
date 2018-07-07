@@ -1,1 +1,1 @@
-"use strict";console.log("ddddd"),setTimeout(function(){console.log(1111)},3e3);var a=10,test="eee"+a;console.log(test);
+"use strict";jQuery(".index").slide({mainCell:".banner-box",titCell:".dot-list li",effect:"fold",autoPlay:!0,delayTime:1e3});
