@@ -1,1 +1,1 @@
-"use strict";$(function(){$(".banner-right li:eq(5)").addClass("active").siblings().removeClass("active")});
+"use strict";$(function(){});
