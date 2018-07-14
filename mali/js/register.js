@@ -1,1 +1,1 @@
-"use strict";$(function(){$(".header-banner .loginreg-tit").text("用户注册")});
+"use strict";$(function(){});
