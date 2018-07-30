@@ -43,7 +43,7 @@ tool.ajax("news:news",{'page':page-1,'size':10,'position':type},function(res){
 				<img class="fl" src="${dataReslist[i].imageFull}" alt="">
 				<div class="fr new-content">
 					<p class="content-tit">${dataReslist[i].title}</p>
-					<div class="content">${dataReslist[i].summary}<a class="content-detail" href="indexnewsdetail.html?t=${type}&id=${dataReslist[i].id}">[详细信息]</a></div>
+					<div class="content">${dataReslist[i].summary}<a class="content-detail" href="indexnewsdetail.html?t=${type}&id=${dataReslist[i].id}&s=${isSelf}">[详细信息]</a></div>
 					<div class="pub-time"><i class="time-icon"></i>发布时间&nbsp;&nbsp;${tool.getDate(dataReslist[i].createTime)}</div>
 				</div>
 			</div>`
@@ -60,13 +60,13 @@ tool.ajax("news:news",{'page':page-1,'size':10,'position':type},function(res){
 			totalPages: res.data.totalPages,
 			visiblePages: 5,
 			currentPage: page,
-			prev: `<li class="prev"><a href="indexnews.html?t=${type}&p=${page-1}">上一页</a></li>`,
-			next: `<li class="next"><a href="indexnews.html?t=${type}&p=${page+1}">下一页</a></li>`,
+			prev: `<li class="prev"><a href="indexnews.html?t=${type}&p=${page-1}&s=${isSelf}">上一页</a></li>`,
+			next: `<li class="next"><a href="indexnews.html?t=${type}&p=${page+1}&s=${isSelf}">下一页</a></li>`,
 			page: `<li class="page"><a href="#">{{page}}</a></li>`,
 			onPageChange: function (num, type2) {
 				$("#pagination2 .page").each(function(){
 					let nowpage=+$(this).find("a").text()
-					$(this).find("a").attr('href',`indexnews.html?t=${type}&p=${nowpage}`);
+					$(this).find("a").attr('href',`indexnews.html?t=${type}&p=${nowpage}&s=${isSelf}`);
 				})
 			}
 		});
