@@ -1,0 +1,1 @@
+"use strict";$(function(){$(".header-banner .loginreg-tit").text("用户登录")});

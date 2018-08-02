@@ -1,0 +1,1 @@
+"use strict";$(function(){$(".banner-right li:eq(1)").addClass("active").siblings().removeClass("active"),$("#distpicker").distpicker({autoSelect:!1,province:"请选择省份",city:"请选择城市",district:"请选择区域"})});
