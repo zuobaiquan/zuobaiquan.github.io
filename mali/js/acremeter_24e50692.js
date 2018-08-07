@@ -1,0 +1,1 @@
+"use strict";$(function(){jQuery(".w3cFocus").slide&&jQuery(".w3cFocus").slide({mainCell:".bd ul",effect:"fold",delayTime:300,autoPlay:!0}),$("#distpicker").distpicker&&$("#distpicker").distpicker({autoSelect:!1,province:"请选择省份",city:"请选择城市",district:"请选择区域"})});
