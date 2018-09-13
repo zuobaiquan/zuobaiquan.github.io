@@ -39,10 +39,10 @@ if(isSelf==1){
 }
 if(type==2){
 	document.title = '马力视频';
-	$(".indexdetail-tit").append(`<i class="map"></i>当前位置：<a class="link" href="/">首页</a>>买农机>马力视频`)
+	$(".indexdetail-tit").append(`<i class="map"></i>当前位置：<a class="link" href="index.html">首页</a>>买农机>马力视频`)
 }else{
 	document.title = '活动中心';
-	$(".indexdetail-tit").append(`<i class="map"></i>当前位置：<a class="link" href="/">首页</a>>买农机>活动中心`)
+	$(".indexdetail-tit").append(`<i class="map"></i>当前位置：<a class="link" href="index.html">首页</a>>买农机>活动中心`)
 }
 tool.ajax(`news:news/${newsid}`,{'projection':'withUser'},function(res){
 	if(res.code==0){
