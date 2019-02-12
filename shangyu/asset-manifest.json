@@ -1,14 +1,8 @@
 {
-  "main.js": "./shangyu/static/js/main.chunk.js?v=18042751",
-  "static/js/1.chunk.js?v=1d7c640a": "./shangyu/static/js/1.chunk.js?v=1d7c640a",
-  "static/js/2.chunk.js?v=c5d84e82": "./shangyu/static/js/2.chunk.js?v=c5d84e82",
-  "static/js/3.chunk.js?v=cee3b14e": "./shangyu/static/js/3.chunk.js?v=cee3b14e",
-  "static/js/4.chunk.js?v=be1e798a": "./shangyu/static/js/4.chunk.js?v=be1e798a",
-  "static/js/5.chunk.js?v=9bdd3cb3": "./shangyu/static/js/5.chunk.js?v=9bdd3cb3",
-  "static/js/6.chunk.js?v=b65fd477": "./shangyu/static/js/6.chunk.js?v=b65fd477",
-  "common/js/vendor.js": "./shangyu/static/js/common/js/vendor.chunk.js?v=fd8dd578",
-  "common/js/mainfest.js": "./shangyu/static/js/common/js/mainfest.chunk.js?v=e168c2a3",
+  "main.js": "./shangyu/static/js/main.chunk.js?v=4b351894",
+  "common/js/vendor.js": "./shangyu/static/js/common/js/vendor.chunk.js?v=84ad53cb",
+  "common/js/mainfest.js": "./shangyu/static/js/common/js/mainfest.chunk.js?v=25113232",
   "index.html": "./shangyu/index.html",
-  "precache-manifest.66014b3ac2f531ae21b8e2da4fb693d3.js": "./shangyu/precache-manifest.66014b3ac2f531ae21b8e2da4fb693d3.js",
+  "precache-manifest.f7e55cc07a816f452e98558d5e8f90b0.js": "./shangyu/precache-manifest.f7e55cc07a816f452e98558d5e8f90b0.js",
   "service-worker.js": "./shangyu/service-worker.js"
 }
