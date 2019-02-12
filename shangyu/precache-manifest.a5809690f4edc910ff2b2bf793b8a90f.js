@@ -1,7 +1,7 @@
 self.__precacheManifest = [
   {
-    "revision": "1e62f2d39a5b2c62130a",
-    "url": "/shangyu/static/js/main.chunk.js?v=1e62f2d3"
+    "revision": "56f7c29cac6904c2dfe4",
+    "url": "/shangyu/static/js/main.chunk.js?v=56f7c29c"
   },
   {
     "revision": "1fa7dbe86578f9a88dcc",
@@ -36,7 +36,7 @@ self.__precacheManifest = [
     "url": "/shangyu/static/js/1.chunk.js?v=1d7c640a"
   },
   {
-    "revision": "518e114363c54764d112ff87f12b5aa4",
+    "revision": "d90ef00eb73425be2df70e93453bfcd3",
     "url": "/shangyu/index.html"
   }
 ];

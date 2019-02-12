@@ -1,14 +1,14 @@
 {
-  "main.js": "./shangyu/static/js/main.chunk.js?v=1e62f2d3",
-  "static/js/1.chunk.js?v=1d7c640a": "./shangyu/static/js/1.chunk.js?v=1d7c640a",
-  "static/js/2.chunk.js?v=c5d84e82": "./shangyu/static/js/2.chunk.js?v=c5d84e82",
-  "static/js/3.chunk.js?v=cee3b14e": "./shangyu/static/js/3.chunk.js?v=cee3b14e",
-  "static/js/4.chunk.js?v=be1e798a": "./shangyu/static/js/4.chunk.js?v=be1e798a",
-  "static/js/5.chunk.js?v=9bdd3cb3": "./shangyu/static/js/5.chunk.js?v=9bdd3cb3",
-  "static/js/6.chunk.js?v=b65fd477": "./shangyu/static/js/6.chunk.js?v=b65fd477",
-  "common/js/vendor.js": "./shangyu/static/js/common/js/vendor.chunk.js?v=1fa7dbe8",
-  "common/js/mainfest.js": "./shangyu/static/js/common/js/mainfest.chunk.js?v=e168c2a3",
-  "index.html": "./shangyu/index.html",
-  "precache-manifest.f092f4162dd97681399bbb808bb71159.js": "./shangyu/precache-manifest.f092f4162dd97681399bbb808bb71159.js",
-  "service-worker.js": "./shangyu/service-worker.js"
+  "main.js": "/shangyustatic/js/main.chunk.js?v=56f7c29c",
+  "static/js/1.chunk.js?v=1d7c640a": "/shangyustatic/js/1.chunk.js?v=1d7c640a",
+  "static/js/2.chunk.js?v=c5d84e82": "/shangyustatic/js/2.chunk.js?v=c5d84e82",
+  "static/js/3.chunk.js?v=cee3b14e": "/shangyustatic/js/3.chunk.js?v=cee3b14e",
+  "static/js/4.chunk.js?v=be1e798a": "/shangyustatic/js/4.chunk.js?v=be1e798a",
+  "static/js/5.chunk.js?v=9bdd3cb3": "/shangyustatic/js/5.chunk.js?v=9bdd3cb3",
+  "static/js/6.chunk.js?v=b65fd477": "/shangyustatic/js/6.chunk.js?v=b65fd477",
+  "common/js/vendor.js": "/shangyustatic/js/common/js/vendor.chunk.js?v=1fa7dbe8",
+  "common/js/mainfest.js": "/shangyustatic/js/common/js/mainfest.chunk.js?v=e168c2a3",
+  "index.html": "/shangyuindex.html",
+  "precache-manifest.a5809690f4edc910ff2b2bf793b8a90f.js": "/shangyuprecache-manifest.a5809690f4edc910ff2b2bf793b8a90f.js",
+  "service-worker.js": "/shangyuservice-worker.js"
 }
