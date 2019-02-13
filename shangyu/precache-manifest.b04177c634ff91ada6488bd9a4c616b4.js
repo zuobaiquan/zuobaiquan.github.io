@@ -1,15 +1,15 @@
 self.__precacheManifest = [
   {
-    "revision": "8d62fa3add5f9c831925",
-    "url": "/shangyu/static/js/main.chunk.js?v=8d62fa3a"
+    "revision": "71ddb9792d54bb228894",
+    "url": "/shangyu/static/js/main.chunk.js?v=71ddb979"
   },
   {
     "revision": "8dad10213b020deb8181",
     "url": "/shangyu/static/js/common/js/vendor.chunk.js?v=8dad1021"
   },
   {
-    "revision": "26d95d54b8ed916c14f4",
-    "url": "/shangyu/static/js/common/js/mainfest.chunk.js?v=26d95d54"
+    "revision": "7962bccffbeecffe25bf",
+    "url": "/shangyu/static/js/common/js/mainfest.chunk.js?v=7962bccf"
   },
   {
     "revision": "e90ecf4636a33976167e",
@@ -20,8 +20,8 @@ self.__precacheManifest = [
     "url": "/shangyu/static/js/5.chunk.js?v=454570f0"
   },
   {
-    "revision": "3601fa9dc3c6804d9c96",
-    "url": "/shangyu/static/js/4.chunk.js?v=3601fa9d"
+    "revision": "48ea236397b9b42e7268",
+    "url": "/shangyu/static/js/4.chunk.js?v=48ea2363"
   },
   {
     "revision": "2fecd9c0ecab837edc0c",
@@ -36,7 +36,7 @@ self.__precacheManifest = [
     "url": "/shangyu/static/js/1.chunk.js?v=e9a0b4c4"
   },
   {
-    "revision": "4adafe7ce274d4c50f572b97c4fec0ef",
+    "revision": "0d8485709ec654bc8972c1eacabac3db",
     "url": "/shangyu/index.html"
   }
 ];
