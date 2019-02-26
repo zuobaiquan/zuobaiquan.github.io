@@ -1,0 +1,20 @@
+
+
+<script>
+    var url = location.href.split('?')
+    var pars = url[1].split('&')
+    var data = {}
+    for (var i = 0; i < pars.length; i++) {
+      var p = pars[i].split('=')
+      data[p[0]] = p[1]
+    }
+    // pars.forEach((n, i) => {
+    //     var p = n.split('=')
+    //     data[p[0]] = p[1]
+    // })
+    if (data.app3Redirect) {
+        window.location.href = '/shangyu/#' + data.app3Redirect
+    }else{
+      window.location.href = '/shangyu/#'
+    }
+</script>
