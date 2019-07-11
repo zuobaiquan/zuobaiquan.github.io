@@ -9,6 +9,9 @@
         0 {  left:20px;  }
         100% {  left:calc(100% - 40px);  }
        }
+       html,body{
+         height: 100%;
+       }
     *{
         margin: 0px;
         padding: 0px;
@@ -82,7 +85,7 @@
     </div>
   </body>
   <script type="text/javascript">
-    var h = window.screen.height
+    var h = document.body.clientHeight
    document.querySelector(".bg img").style.height= (h - 40)+'px'
   </script>
 </html>
