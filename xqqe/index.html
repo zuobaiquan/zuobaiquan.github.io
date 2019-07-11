@@ -45,7 +45,7 @@
       background:transparent;
       top:6px;
       left:20px;
-      animation: changebox 3s infinite;
+      animation: changebox linear 3s infinite;
     }
   .heart:before, .heart:after {
     position: absolute;
@@ -70,7 +70,6 @@
   }
   .bg img{
   width:100%;
-
   }
 
     </style>
@@ -86,6 +85,6 @@
   </body>
   <script type="text/javascript">
     var h = document.body.clientHeight
-   document.querySelector(".bg img").style.height= (h - 40)+'px'
+   document.querySelector(".bg img").style.height= (h -80)+'px'
   </script>
 </html>
