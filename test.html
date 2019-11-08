@@ -1,0 +1,42 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>测试平板</title>
+<style>
+html {
+  box-sizing: border-box;
+  font: 18px PT Mono;
+  background: antiquewhite;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 90vh;
+}
+
+</style>
+</head>
+<body>
+
+</body>
+<script src="https://res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/2.5.1/vconsole.min.js"></script>
+
+<script type="text/javascript">
+var u = navigator.userAgent
+console.log("navigatoruserAgent",u);
+console.log("native-app",u.indexOf('native-app'));
+alert(u)
+if (u.indexOf('native-app') != -1) {
+
+}
+
+</script>
+</html>
