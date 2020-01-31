@@ -1,1 +1,0 @@
-"use strict";$(function(){jQuery(".index").slide&&jQuery(".index").slide({mainCell:".banner-box",titCell:".dot-list li",effect:"fold",autoPlay:!0,delayTime:1e3})});
